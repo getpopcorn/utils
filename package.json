@@ -1,0 +1,56 @@
+{
+  "name": "@getpopcorn/utils",
+  "description": "Various common utilities and tools",
+  "version": "0.0.1",
+  "license": "SEE LICENSE IN LICENSE",
+  "author": "Popcorn Cloud",
+  "main": "./lib/index.js",
+  "files": [
+    "/lib",
+    "!/lib/**/*.map",
+    "!/tests"
+  ],
+  "scripts": {
+    "start": "npx ts-node src/index.ts",
+    "test": "npx c8 -reporter=lcov ava",
+    "test:watch": "npx c8 -reporter=lcov ava --watch",
+    "build": "npm run clean && npx tsc --project tsconfig.build.json",
+    "clean": "rm -rf lib",
+    "package": "npm pack",
+    "prepublishOnly": "npm run build",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "mikrocompare": "1",
+    "mikroformat": "1"
+  },
+  "devDependencies": {
+    "@ava/typescript": "4",
+    "@types/node": "20",
+    "@typescript-eslint/eslint-plugin": "7",
+    "@typescript-eslint/parser": "7",
+    "ava": "6",
+    "c8": "9",
+    "eslint": "8",
+    "eslint-config-prettier": "9",
+    "eslint-plugin-prettier": "5",
+    "husky": "9",
+    "prettier": "3",
+    "ts-node": "10",
+    "typescript": "5"
+  },
+  "ava": {
+    "typescript": {
+      "rewritePaths": {
+        "src/": "lib/"
+      },
+      "compile": false
+    },
+    "files": [
+      "tests/**/*.ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
+  }
+}
