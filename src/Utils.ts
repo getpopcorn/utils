@@ -2,11 +2,13 @@ import { MikroCompare } from 'mikrocompare';
 import { MikroFormat } from 'mikroformat';
 
 import { Condition, FilterCondition } from './interfaces';
-import { FlowComponentRepresentation } from './interfaces/flows';
 import { ConditionalConfiguration, ConditionalResult } from './interfaces/flows/Conditional';
+import { FlowComponentRepresentation } from './interfaces/flows';
 import { FormatFunction, FormatOptions, FormatType } from './interfaces/flows/Format';
 import { ProcessFunction, ProcessInput } from './interfaces/flows/Process';
 import { RefineFilterResult } from './interfaces/flows/Refine';
+import { RequestInput } from './interfaces/flows/Request';
+
 import {
   TransformConfiguration,
   TransformOperation,
@@ -415,8 +417,6 @@ export class Utils {
         dateStyle: settings.dateStyle
       };
 
-      console.log('formatOptions', formatOptions);
-
       this.createNestedValues(
         fields,
         type === 'keep' ? nestedValue : this.reformat(formatOptions),
@@ -433,4 +433,46 @@ export class Utils {
 
     return transformedResult;
   }
+
+  /**
+   * @description HTTPS request helper function.
+   *
+   * @example
+   * await request({ endpoint: 'https://api.mydomain.com', method: 'GET' });
+   * await request({ endpoint: 'https://api.mydomain.com', method: 'POST', message: 'Hey', headers: { 'x-some-key': 'value' } });
+   */
+  public async request(input: RequestInput) {
+    const { message, endpoint, method } = input;
+
+    const headers = input.headers || {};
+    const body = (this.isJson(message as string) ? JSON.stringify(message) : message) as string;
+
+    return await fetch(endpoint, {
+      headers,
+      method,
+      body
+    })
+      .then((response: any) => {
+        if (response.status >= 200 && response.status < 300) return response.text();
+        const errorMessage = `Not OK: Status code is ${response.status}`;
+        console.error(errorMessage);
+        return { popcorn_error: errorMessage };
+      })
+      .then((response: any) => {
+        if (this.isJson(response)) return JSON.parse(response);
+        return response;
+      });
+  }
+
+  /**
+   * @description TODO
+   */
+  private isJson = (str: string): Record<string, unknown> | boolean => {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  };
 }
