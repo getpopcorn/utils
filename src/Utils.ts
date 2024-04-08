@@ -303,7 +303,7 @@ export class Utils {
         result.push(await this.processQueue(queue, startInput));
     } else result.push(await this.processQueue(queue, startInput));
 
-    return result;
+    return result.flatMap((item: any) => item);
   }
 
   /**
