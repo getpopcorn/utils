@@ -1,7 +1,7 @@
 {
   "name": "@getpopcorn/utils",
   "description": "Various common utilities and tools",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "SEE LICENSE IN LICENSE",
   "author": "Popcorn Cloud",
   "main": "./lib/index.js",

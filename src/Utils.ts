@@ -147,7 +147,7 @@ export class Utils {
   /**
    * @description Get example values for the Transform component.
    */
-  private getExampleValue(type: string) {
+  public getExampleValue(type: string) {
     if (type === 'true_false') return true;
     if (type === 'number') return 123;
     if (type === 'text') return 'Some text here';
