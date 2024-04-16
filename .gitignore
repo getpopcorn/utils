@@ -3,6 +3,7 @@
 .env
 .webpack/
 lib/
+dist/
 build/
 coverage/
 node_modules/

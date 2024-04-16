@@ -6,7 +6,6 @@
     "outDir": "lib",
     "lib": ["esnext"],
     "declaration": true,
-    "emitDeclarationOnly": true,
     "esModuleInterop": true,
     "importHelpers": false,
     "forceConsistentCasingInFileNames": true,

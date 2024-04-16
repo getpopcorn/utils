@@ -1,16 +1,16 @@
 {
   "name": "@getpopcorn/utils",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "description": "Various common utilities and tools",
   "author": "Popcorn Cloud",
   "license": "SEE LICENSE IN LICENSE",
   "type": "module",
-  "main": "lib/index.cjs.js",
-  "module": "lib/index.esm.js",
+  "main": "lib/index.cjs",
+  "module": "lib/index.js",
   "exports": {
     ".": {
-      "require": "./lib/index.cjs.js",
-      "import": "./lib/index.esm.js"
+      "require": "./lib/index.cjs",
+      "import": "./lib/index.js"
     }
   },
   "files": [
@@ -19,17 +19,13 @@
     "!/tests"
   ],
   "scripts": {
-    "start": "npx ts-node src/index.ts",
     "test": "c8 -reporter=lcov node --loader ts-node/esm --test ./tests/*",
     "test:watch": "node watch.js",
-    "build:cjs": "esbuild src/index.ts --bundle --outfile=lib/index.cjs.js --platform=node --target=es2022 --format=cjs",
-    "build:esm": "esbuild src/index.ts --bundle --outfile=lib/index.esm.js --platform=node --target=es2022 --format=esm",
-    "build:types": "npx tsc --project tsconfig.build.json",
-    "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:types",
-    "clean": "rm -rf lib",
+    "build": "npm run clean && tsup src --format esm,cjs --dts && mv dist lib",
+    "clean": "rm -rf lib && rm -rf dist",
     "package": "npm pack",
     "prepublishOnly": "npm run build",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "mikrocompare": "1",
@@ -40,13 +36,13 @@
     "@typescript-eslint/eslint-plugin": "7",
     "@typescript-eslint/parser": "7",
     "c8": "9",
-    "esbuild": "0",
     "eslint": "8",
     "eslint-config-prettier": "9",
     "eslint-plugin-prettier": "5",
     "husky": "9",
     "prettier": "3",
     "ts-node": "10",
+    "tsup": "8",
     "typescript": "5"
   }
 }
