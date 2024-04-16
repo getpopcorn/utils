@@ -1,4 +1,4 @@
-import { HttpMethod } from '..';
+import { HttpMethod } from '../index.js';
 
 export type RequestInput = {
   endpoint: string;

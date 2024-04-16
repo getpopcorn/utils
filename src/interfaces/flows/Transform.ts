@@ -1,5 +1,5 @@
-import { CurrencyOptions } from '..';
-import { DateStyle, FormatType } from './Format';
+import { CurrencyOptions } from '../index.js';
+import { DateStyle, FormatType } from './Format.js';
 
 export type TransformOptions = {
   config?: TransformConfiguration;

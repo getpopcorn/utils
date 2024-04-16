@@ -1,10 +1,18 @@
 {
   "name": "@getpopcorn/utils",
+  "version": "0.0.6",
   "description": "Various common utilities and tools",
-  "version": "0.0.5",
-  "license": "SEE LICENSE IN LICENSE",
   "author": "Popcorn Cloud",
-  "main": "./lib/index.js",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "main": "lib/index.cjs.js",
+  "module": "lib/index.esm.js",
+  "exports": {
+    ".": {
+      "require": "./lib/index.cjs.js",
+      "import": "./lib/index.esm.js"
+    }
+  },
   "files": [
     "/lib",
     "!/lib/**/*.map",
@@ -12,9 +20,11 @@
   ],
   "scripts": {
     "start": "npx ts-node src/index.ts",
-    "test": "npx c8 -reporter=lcov ava",
-    "test:watch": "npx c8 -reporter=lcov ava --watch",
-    "build": "npm run clean && npx tsc --project tsconfig.build.json",
+    "test": "c8 -reporter=lcov node --loader ts-node/esm --test ./tests/*",
+    "test:watch": "node watch.js",
+    "build:cjs": "esbuild src/index.ts --bundle --outfile=lib/index.cjs.js --platform=node --target=node20 --format=cjs",
+    "build:esm": "esbuild src/index.ts --bundle --outfile=lib/index.esm.js --platform=node --target=node20 --format=esm",
+    "build": "npm run clean && npm run build:cjs && npm run build:esm",
     "clean": "rm -rf lib",
     "package": "npm pack",
     "prepublishOnly": "npm run build",
@@ -25,12 +35,11 @@
     "mikroformat": "1"
   },
   "devDependencies": {
-    "@ava/typescript": "4",
     "@types/node": "20",
     "@typescript-eslint/eslint-plugin": "7",
     "@typescript-eslint/parser": "7",
-    "ava": "6",
     "c8": "9",
+    "esbuild": "0",
     "eslint": "8",
     "eslint-config-prettier": "9",
     "eslint-plugin-prettier": "5",
@@ -38,19 +47,5 @@
     "prettier": "3",
     "ts-node": "10",
     "typescript": "5"
-  },
-  "ava": {
-    "typescript": {
-      "rewritePaths": {
-        "src/": "lib/"
-      },
-      "compile": false
-    },
-    "files": [
-      "tests/**/*.ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ]
   }
 }

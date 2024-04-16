@@ -1,4 +1,4 @@
-import { RefineConfiguration } from '../src/interfaces/flows/Refine';
+import { RefineConfiguration } from '../src/interfaces/flows/Refine.js';
 
 export const validRefineInput = [
   {

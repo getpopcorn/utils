@@ -1,20 +1,20 @@
 import { MikroCompare } from 'mikrocompare';
 import { MikroFormat } from 'mikroformat';
 
-import { Condition, FilterCondition } from './interfaces';
-import { ConditionalConfiguration, ConditionalResult } from './interfaces/flows/Conditional';
-import { FlowComponentRepresentation } from './interfaces/flows';
-import { FormatFunction, FormatOptions, FormatType } from './interfaces/flows/Format';
-import { ProcessFunction, ProcessInput } from './interfaces/flows/Process';
-import { RefineFilterResult } from './interfaces/flows/Refine';
-import { RequestInput } from './interfaces/flows/Request';
+import { Condition, FilterCondition } from './interfaces/index.js';
+import { ConditionalConfiguration, ConditionalResult } from './interfaces/flows/Conditional.js';
+import { FlowComponentRepresentation } from './interfaces/flows/index.js';
+import { FormatFunction, FormatOptions, FormatType } from './interfaces/flows/Format.js';
+import { ProcessFunction, ProcessInput } from './interfaces/flows/Process.js';
+import { RefineFilterResult } from './interfaces/flows/Refine.js';
+import { RequestInput } from './interfaces/flows/Request.js';
 
 import {
   TransformConfiguration,
   TransformOperation,
   TransformResult,
   TransformSettings
-} from './interfaces/flows/Transform';
+} from './interfaces/flows/Transform.js';
 
 /**
  * @description Utils are, as you can guess, utilities that
@@ -465,7 +465,7 @@ export class Utils {
   }
 
   /**
-   * @description TODO
+   * @description Check if a string input can be unwrapped as a JSON object.
    */
   private isJson = (str: string): Record<string, unknown> | boolean => {
     try {

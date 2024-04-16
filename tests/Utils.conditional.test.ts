@@ -1,20 +1,21 @@
-import test from 'ava';
+import { test } from 'node:test';
+import assert from 'node:assert';
 
-import { Utils } from '../src';
+import { ConditionalConfiguration } from '../src/interfaces/flows/Conditional.js';
 
-import { ConditionalConfiguration } from '../src/interfaces/flows/Conditional';
+import { Utils } from '../src/index.js';
 
 import {
   validConditionalComplexConfig,
   validConditionalComplexExpected,
   validConditionalComplexInput,
   validConditionalConfig
-} from '../testdata/conditional';
+} from '../testdata/conditional.js';
 
 /**
  * POSITIVE TESTS
  */
-test('It should determine a positive condition', (t) => {
+test('It should determine a positive condition', () => {
   const expected = {
     'Guests with allergies': [
       {
@@ -43,10 +44,10 @@ test('It should determine a positive condition', (t) => {
 
   const result = new Utils().getConditionals(input, validConditionalConfig);
 
-  t.deepEqual(result, expected);
+  assert.deepStrictEqual(result, expected);
 });
 
-test('It should determine a negative condition', (t) => {
+test('It should determine a negative condition', () => {
   const expected = {
     'Guests with no allergies': [
       {
@@ -91,10 +92,10 @@ test('It should determine a negative condition', (t) => {
 
   const result = new Utils().getConditionals(input, config);
 
-  t.deepEqual(result, expected);
+  assert.deepStrictEqual(result, expected);
 });
 
-test('It should determine multiple conditions', (t) => {
+test('It should determine multiple conditions', () => {
   const expected = {
     'Guests with no allergies and who love games': [
       {
@@ -147,14 +148,14 @@ test('It should determine multiple conditions', (t) => {
 
   const result = new Utils().getConditionals(input, config);
 
-  t.deepEqual(result, expected);
+  assert.deepStrictEqual(result, expected);
 });
 
-test('It should determine multiple conditional configurations', (t) => {
+test('It should determine multiple conditional configurations', () => {
   const result = new Utils().getConditionals(
     validConditionalComplexInput,
     validConditionalComplexConfig
   );
 
-  t.deepEqual(result, validConditionalComplexExpected);
+  assert.deepStrictEqual(result, validConditionalComplexExpected);
 });

@@ -1,4 +1,4 @@
-import { CurrencyOptions } from '..';
+import { CurrencyOptions } from '../index.js';
 
 export type FormatOptions = {
   type: FormatType;

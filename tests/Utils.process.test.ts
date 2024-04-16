@@ -1,12 +1,13 @@
-import test from 'ava';
+import { test } from 'node:test';
+import assert from 'node:assert';
 
-import { Utils } from '../src';
+import { Utils } from '../src/index.js';
 
 /**
  * POSITIVE TESTS
  */
 
-test('It should add and run a set of functions from the process queue', async (t) => {
+test('It should add and run a set of functions from the process queue', async () => {
   const expected = [false];
 
   const processFunction1 = () => true;
@@ -22,10 +23,10 @@ test('It should add and run a set of functions from the process queue', async (t
     count: undefined
   });
 
-  t.deepEqual(result, expected);
+  assert.deepStrictEqual(result, expected);
 });
 
-test('It should add and run a set of functions from the process queue, using the count style', async (t) => {
+test('It should add and run a set of functions from the process queue, using the count style', async () => {
   const expected = [true, true, true, true, true];
 
   const processFunction1 = () => true;
@@ -36,5 +37,5 @@ test('It should add and run a set of functions from the process queue, using the
     repeats: true,
     count: 5
   });
-  t.deepEqual(result, expected);
+  assert.deepStrictEqual(result, expected);
 });

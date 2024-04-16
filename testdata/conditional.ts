@@ -1,4 +1,4 @@
-import { ConditionalConfiguration } from '../src/interfaces/flows/Conditional';
+import { ConditionalConfiguration } from '../src/interfaces/flows/Conditional.js';
 
 export const validConditionalConfig: ConditionalConfiguration[] = [
   {

@@ -2,7 +2,7 @@ import {
   TransformConfiguration,
   TransformOptions,
   TransformSettings
-} from '../src/interfaces/flows/Transform';
+} from '../src/interfaces/flows/Transform.js';
 
 export const validTransformSettings: TransformSettings = {
   nonExistingValueHandling: 'drop',

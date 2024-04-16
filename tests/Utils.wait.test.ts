@@ -1,11 +1,12 @@
-import test from 'ava';
+import { test } from 'node:test';
+import assert from 'node:assert';
 
-import { Utils } from '../src';
+import { Utils } from '../src/index.js';
 
 /**
  * POSITIVE TESTS
  */
-test('It should wait using a provided value', async (t) => {
+test('It should wait using a provided value', async () => {
   const expected = 1.4;
 
   const timeStart = Date.now();
@@ -14,7 +15,7 @@ test('It should wait using a provided value', async (t) => {
 
   const result = roundedResult(timeStart, timeEnd);
 
-  t.is(result, expected);
+  assert.strictEqual(result, expected);
 });
 
 const roundedResult = (timeStart: number, timeEnd: number) =>

@@ -1,8 +1,9 @@
-import test from 'ava';
+import { test } from 'node:test';
+import assert from 'node:assert';
 
-import { Utils } from '../src';
+import { Utils } from '../src/index.js';
 
-import { TransformConfiguration } from '../src/interfaces/flows/Transform';
+import { TransformConfiguration } from '../src/interfaces/flows/Transform.js';
 
 import {
   validTransformComplexExpected,
@@ -10,12 +11,12 @@ import {
   complexConfig,
   validTransformInputMissingField,
   validTransformSettings
-} from '../testdata/transform';
+} from '../testdata/transform.js';
 
 /**
  * POSITIVE TESTS
  */
-test('It should leave the original object unchanged if there is an empty list of transformed fields', (t) => {
+test('It should leave the original object unchanged if there is an empty list of transformed fields', () => {
   const expected = {
     preferences: {
       allergies: false
@@ -32,10 +33,10 @@ test('It should leave the original object unchanged if there is an empty list of
 
   const result = new Utils().transform(input, config, validTransformSettings);
 
-  t.deepEqual(result, expected);
+  assert.deepStrictEqual(result, expected);
 });
 
-test('It should leave the original object unchanged for unaffected values', (t) => {
+test('It should leave the original object unchanged for unaffected values', () => {
   const expected = {
     daysToBonus: 123,
     preferences: {
@@ -81,10 +82,10 @@ test('It should leave the original object unchanged for unaffected values', (t) 
 
   const result = new Utils().transform(input, config, validTransformSettings);
 
-  t.deepEqual(result, expected);
+  assert.deepStrictEqual(result, expected);
 });
 
-test('It should transform an object and skip inactive operations', (t) => {
+test('It should transform an object and skip inactive operations', () => {
   const expected = {
     allergies: false,
     cancelled: false,
@@ -132,10 +133,10 @@ test('It should transform an object and skip inactive operations', (t) => {
 
   const result = new Utils().transform(input, config, validTransformSettings);
 
-  t.deepEqual(result, expected);
+  assert.deepStrictEqual(result, expected);
 });
 
-test('It should not do anything with non-existing fields', (t) => {
+test('It should not do anything with non-existing fields', () => {
   const expected = {
     something: 123
   };
@@ -146,10 +147,10 @@ test('It should not do anything with non-existing fields', (t) => {
     validTransformSettings
   );
 
-  t.deepEqual(result, expected);
+  assert.deepStrictEqual(result, expected);
 });
 
-test('It should transform an object and format fields', (t) => {
+test('It should transform an object and format fields', () => {
   const expected = validTransformComplexExpected;
 
   const result = new Utils().transform(
@@ -167,10 +168,10 @@ test('It should transform an object and format fields', (t) => {
     }
   );
 
-  t.deepEqual(result, expected);
+  assert.deepStrictEqual(result, expected);
 });
 
-test('It should transform an array of objects and format fields', (t) => {
+test('It should transform an array of objects and format fields', () => {
   const expected = [validTransformComplexExpected, validTransformComplexExpected];
 
   const result = new Utils().transform(
@@ -188,5 +189,5 @@ test('It should transform an array of objects and format fields', (t) => {
     }
   );
 
-  t.deepEqual(result, expected);
+  assert.deepStrictEqual(result, expected);
 });

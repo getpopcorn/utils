@@ -1,4 +1,4 @@
-import { Condition } from '..';
+import { Condition } from '../index.js';
 
 export type ConditionalResult = {
   [key: string]: Record<string, any>[];
