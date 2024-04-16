@@ -1,6 +1,6 @@
 {
   "name": "@getpopcorn/utils",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Various common utilities and tools",
   "author": "Popcorn Cloud",
   "license": "SEE LICENSE IN LICENSE",
@@ -24,7 +24,8 @@
     "test:watch": "node watch.js",
     "build:cjs": "esbuild src/index.ts --bundle --outfile=lib/index.cjs.js --platform=node --target=node20 --format=cjs",
     "build:esm": "esbuild src/index.ts --bundle --outfile=lib/index.esm.js --platform=node --target=node20 --format=esm",
-    "build": "npm run clean && npm run build:cjs && npm run build:esm",
+    "build:types": "npx tsc --project tsconfig.build.json --emitDeclarationOnly",
+    "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:types",
     "clean": "rm -rf lib",
     "package": "npm pack",
     "prepublishOnly": "npm run build",
