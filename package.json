@@ -19,11 +19,12 @@
     "!/tests"
   ],
   "scripts": {
-    "test": "c8 -reporter=lcov node --loader ts-node/esm --test ./tests/*",
-    "test:watch": "node watch.js",
+    "test": "node test.js",
+    "test:watch": "node test.js true",
     "build": "npm run clean && tsup src --format esm,cjs --dts && mv dist lib",
     "clean": "rm -rf lib && rm -rf dist",
     "package": "npm pack",
+    "pretest": "rm -rf coverage && rm -rf temp_coverage",
     "prepublishOnly": "npm run build",
     "prepare": "husky"
   },
