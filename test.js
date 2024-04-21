@@ -8,17 +8,20 @@ const isWatchMode = process.argv[2];
 function runTest(fileName) {
   const c8Options = `npx c8 --report=false --clean=false`;
   return new Promise((resolve, reject) => {
-    exec(`${c8Options} node --loader ts-node/esm --test "${fileName}"`, (error, stdout, stderr) => {
-      if (error) {
-        console.log(stdout);
-        console.error(error);
-        return;
-      }
+    exec(
+      `NODE_ENV=test ${c8Options} node --loader ts-node/esm --test "${fileName}"`,
+      (error, stdout, stderr) => {
+        if (error) {
+          console.log(stdout);
+          console.error(error);
+          return;
+        }
 
-      if (isWatchMode) console.log(stdout);
-      if (stderr) console.error(stderr);
-      resolve();
-    });
+        if (isWatchMode) console.log(stdout);
+        if (stderr) console.error(stderr);
+        resolve();
+      }
+    );
   });
 }
 

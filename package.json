@@ -33,13 +33,14 @@
     "mikroformat": "1"
   },
   "devDependencies": {
+    "@getpopcorn/validator": "latest",
     "@types/node": "20",
     "@typescript-eslint/eslint-plugin": "7",
     "@typescript-eslint/parser": "7",
     "c8": "9",
-    "eslint": "8",
     "eslint-config-prettier": "9",
     "eslint-plugin-prettier": "5",
+    "eslint": "8",
     "husky": "9",
     "prettier": "3",
     "ts-node": "10",

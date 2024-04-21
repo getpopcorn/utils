@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
+import { Validator } from '@getpopcorn/validator';
 
 import { Utils } from '../src/index.js';
 
@@ -156,16 +157,8 @@ test('It should transform an object and format fields', () => {
   const result = new Utils().transform(
     validTransformComplexInput,
     complexConfig,
-    // TODO: Should get this from defaults - either in the test or in the function
-    {
-      nonExistingValueHandling: 'drop',
-      currency: {
-        symbol: 'EUR',
-        locale: 'sv-SE',
-        precision: 8
-      },
-      dateStyle: 'date'
-    }
+    // @ts-ignore
+    new Validator().getDefaults('transform')
   );
 
   assert.deepStrictEqual(result, expected);
@@ -177,16 +170,8 @@ test('It should transform an array of objects and format fields', () => {
   const result = new Utils().transform(
     [validTransformComplexInput, validTransformComplexInput],
     complexConfig,
-    // TODO: Should get this from defaults - either in the test or in the function
-    {
-      nonExistingValueHandling: 'drop',
-      currency: {
-        symbol: 'EUR',
-        locale: 'sv-SE',
-        precision: 8
-      },
-      dateStyle: 'date'
-    }
+    // @ts-ignore
+    new Validator().getDefaults('transform')
   );
 
   assert.deepStrictEqual(result, expected);
