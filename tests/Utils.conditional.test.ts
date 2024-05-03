@@ -1,5 +1,4 @@
-import { test } from 'node:test';
-import assert from 'node:assert';
+import { test, expect } from 'vitest';
 
 import { ConditionalConfiguration } from '../src/interfaces/flows/Conditional.js';
 
@@ -44,7 +43,7 @@ test('It should determine a positive condition', () => {
 
   const result = new Utils().getConditionals(input, validConditionalConfig);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should determine a negative condition', () => {
@@ -92,7 +91,7 @@ test('It should determine a negative condition', () => {
 
   const result = new Utils().getConditionals(input, config);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should determine multiple conditions', () => {
@@ -148,7 +147,7 @@ test('It should determine multiple conditions', () => {
 
   const result = new Utils().getConditionals(input, config);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should determine multiple conditional configurations', () => {
@@ -157,5 +156,5 @@ test('It should determine multiple conditional configurations', () => {
     validConditionalComplexConfig
   );
 
-  assert.deepStrictEqual(result, validConditionalComplexExpected);
+  expect(result).toMatchObject(validConditionalComplexExpected);
 });

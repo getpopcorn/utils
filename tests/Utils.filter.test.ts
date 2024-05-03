@@ -1,5 +1,4 @@
-import { test } from 'node:test';
-import assert from 'node:assert';
+import { test, expect } from 'vitest';
 
 import { Utils } from '../src/Utils.js';
 
@@ -23,7 +22,7 @@ test('It should run an "is false" filter', () => {
 
   const result = new Utils().filter(validRefineInput, conditions);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should run an "is true" filter', () => {
@@ -33,7 +32,7 @@ test('It should run an "is true" filter', () => {
 
   const result = new Utils().filter(validRefineInput, conditions);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should run an "exists" filter', () => {
@@ -47,7 +46,7 @@ test('It should run an "exists" filter', () => {
 
   const result = new Utils().filter(input, conditions);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should run a "not exists" filter', () => {
@@ -60,7 +59,7 @@ test('It should run a "not exists" filter', () => {
 
   const result = new Utils().filter(input, conditions);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should run a "less than" filter', () => {
@@ -74,7 +73,7 @@ test('It should run a "less than" filter', () => {
 
   const result = new Utils().filter(validRefineBasicInput, conditions);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should run a "less than or equal" filter', () => {
@@ -92,7 +91,7 @@ test('It should run a "less than or equal" filter', () => {
 
   const result = new Utils().filter(validRefineBasicInput, conditions);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should run a "more than" filter', () => {
@@ -106,7 +105,7 @@ test('It should run a "more than" filter', () => {
 
   const result = new Utils().filter(validRefineBasicInput, conditions);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should run a "more than or equal" filter', () => {
@@ -127,7 +126,7 @@ test('It should run a "more than or equal" filter', () => {
 
   const result = new Utils().filter(validRefineBasicInput, conditions);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should run a "contains" filter', () => {
@@ -144,7 +143,7 @@ test('It should run a "contains" filter', () => {
 
   const result = new Utils().filter(expected, conditions);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should run an "includes" filter', () => {
@@ -167,7 +166,7 @@ test('It should run an "includes" filter', () => {
 
   const result = new Utils().filter(input, conditions);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should run a "startsWith" filter', () => {
@@ -185,7 +184,7 @@ test('It should run a "startsWith" filter', () => {
 
   const result = new Utils().filter(validRefineContentInput, conditions);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should run a "endsWith" filter', () => {
@@ -203,7 +202,7 @@ test('It should run a "endsWith" filter', () => {
 
   const result = new Utils().filter(validRefineContentInput, conditions);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should handle multiple conditions', () => {
@@ -214,5 +213,5 @@ test('It should handle multiple conditions', () => {
     validRefineConfigMultipleConditions.conditions
   );
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });

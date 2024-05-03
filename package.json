@@ -1,6 +1,6 @@
 {
   "name": "@getpopcorn/utils",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Various common utilities and tools",
   "author": "Popcorn Cloud",
   "license": "SEE LICENSE IN LICENSE",
@@ -19,8 +19,8 @@
     "!/tests"
   ],
   "scripts": {
-    "test": "node test.js",
-    "test:watch": "node test.js true",
+    "test": "npx vitest run",
+    "test:watch": "npx vitest",
     "build": "npm run clean && tsup src --format esm,cjs --dts && mv dist lib",
     "clean": "rm -rf lib && rm -rf dist",
     "package": "npm pack",
@@ -37,7 +37,7 @@
     "@types/node": "20",
     "@typescript-eslint/eslint-plugin": "7",
     "@typescript-eslint/parser": "7",
-    "c8": "9",
+    "@vitest/coverage-v8": "1",
     "eslint-config-prettier": "9",
     "eslint-plugin-prettier": "5",
     "eslint": "8",
@@ -45,6 +45,7 @@
     "prettier": "3",
     "ts-node": "10",
     "tsup": "8",
-    "typescript": "5"
+    "typescript": "5",
+    "vitest": "1"
   }
 }

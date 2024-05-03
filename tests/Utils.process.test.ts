@@ -1,5 +1,4 @@
-import { test } from 'node:test';
-import assert from 'node:assert';
+import { test, expect } from 'vitest';
 
 import { Utils } from '../src/index.js';
 
@@ -23,7 +22,7 @@ test('It should add and run a set of functions from the process queue', async ()
     count: undefined
   });
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should add and run a set of functions from the process queue, using the count style', async () => {
@@ -37,5 +36,5 @@ test('It should add and run a set of functions from the process queue, using the
     repeats: true,
     count: 5
   });
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });

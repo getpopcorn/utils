@@ -1,5 +1,4 @@
-import { test } from 'node:test';
-import assert from 'node:assert';
+import { test, expect } from 'vitest';
 
 import { Utils } from '../src/index.js';
 
@@ -15,7 +14,7 @@ test('It should wait using a provided value', async () => {
 
   const result = roundedResult(timeStart, timeEnd);
 
-  assert.strictEqual(result, expected);
+  expect(result).toBe(expected);
 });
 
 const roundedResult = (timeStart: number, timeEnd: number) =>

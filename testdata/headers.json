@@ -1,0 +1,13 @@
+{
+  "updatedAt": "100000000",
+  "headers": [
+    {
+      "id": "header1",
+      "type": "short_text",
+      "isRequired": true,
+      "name": "Header 1",
+      "position": 0,
+      "lastChangedBy": "user123"
+    }
+  ]
+}

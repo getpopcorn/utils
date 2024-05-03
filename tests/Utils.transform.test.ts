@@ -1,5 +1,4 @@
-import { test } from 'node:test';
-import assert from 'node:assert';
+import { test, expect } from 'vitest';
 import { Validator } from '@getpopcorn/validator';
 
 import { Utils } from '../src/index.js';
@@ -34,7 +33,7 @@ test('It should leave the original object unchanged if there is an empty list of
 
   const result = new Utils().transform(input, config, validTransformSettings);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should leave the original object unchanged for unaffected values', () => {
@@ -83,7 +82,7 @@ test('It should leave the original object unchanged for unaffected values', () =
 
   const result = new Utils().transform(input, config, validTransformSettings);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should transform an object and skip inactive operations', () => {
@@ -134,7 +133,7 @@ test('It should transform an object and skip inactive operations', () => {
 
   const result = new Utils().transform(input, config, validTransformSettings);
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should not do anything with non-existing fields', () => {
@@ -148,7 +147,7 @@ test('It should not do anything with non-existing fields', () => {
     validTransformSettings
   );
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should transform an object and format fields', () => {
@@ -161,7 +160,7 @@ test('It should transform an object and format fields', () => {
     new Validator().getDefaults('transform')
   );
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should transform an array of objects and format fields', () => {
@@ -174,5 +173,5 @@ test('It should transform an array of objects and format fields', () => {
     new Validator().getDefaults('transform')
   );
 
-  assert.deepStrictEqual(result, expected);
+  expect(result).toMatchObject(expected);
 });

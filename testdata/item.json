@@ -1,0 +1,17 @@
+{
+  "id": "item123",
+  "fields": [
+    {
+      "headerRef": "header1",
+      "value": "something here"
+    },
+    {
+      "headerRef": "header2",
+      "value": "whoops"
+    },
+    {
+      "headerRef": "header3",
+      "value": "more there"
+    }
+  ]
+}
