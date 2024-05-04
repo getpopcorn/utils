@@ -22,14 +22,28 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://npm.pkg.github.com'
+          scope: '@getpopcorn'
+          always-auth: true
+
       - uses: pnpm/action-setup@v3
         with:
           version: 8
 
-      - run: pnpm install --frozen-lockfile
+      - name: Authenticate with GitHub Packages
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: pnpm test && pnpm build
-      - run: pnpm publish
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
+
+      - name: Publish
+        run: pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
