@@ -31,9 +31,11 @@ jobs:
         run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > .npmrc
 
       - name: Install dependencies
-        run: |
-          pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
           pnpm build
 
       - name: Test
         run: pnpm test
+
+      - name: Build
+        run: pnpm build
