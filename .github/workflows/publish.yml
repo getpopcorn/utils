@@ -27,6 +27,8 @@ jobs:
           version: 8
 
       - run: pnpm install --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: pnpm test && pnpm build
       - run: pnpm publish
         env:
