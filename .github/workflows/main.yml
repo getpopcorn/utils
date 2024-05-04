@@ -1,4 +1,4 @@
-name: main
+name: Build and test
 
 on:
   push:
@@ -28,12 +28,12 @@ jobs:
           version: 8
 
       - name: Authenticate with GitHub Packages
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GH_PACKAGE_TOKEN }}" >> .npmrc
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGE_TOKEN }}
 
       - name: Test
         run: pnpm test
