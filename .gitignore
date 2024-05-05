@@ -1,11 +1,25 @@
-.DS_Store
+# Files
 .dccache
+.DS_Store
 .env
+*.tgz
+*.zip
+
+# Folders
+.aws-sam/
+.esbuild/
+.serverless/
+.temp_coverage/
 .webpack/
-lib/
-dist/
 build/
 coverage/
-node_modules/
+dist/
 docs/
-*.tgz
+generated/
+jest-coverage/
+lib/
+node_modules/
+
+# Diagrams
+diagrams/*.bkp
+diagrams/*.bak
