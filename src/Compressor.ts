@@ -5,15 +5,21 @@ import { gzipSync, gunzipSync } from 'zlib';
  * in an easy way.
  */
 export class Compressor {
+  private readonly isSilent;
+
+  constructor(isSilent = true) {
+    this.isSilent = isSilent;
+  }
+
   /**
    * @description Compress a string with gzip.
    */
-  public compress(input: string, isSilent = true) {
+  public compress(input: string) {
     const compressed = gzipSync(input);
 
-    if (!isSilent)
+    if (!this.isSilent)
       console.log(
-        `The original string was ${this.size(input)} bytes and the compressed string was ${this.size(compressed.toString())} bytes.`
+        `The original string was ${this.size(input)} bytes and the compressed string is ${this.size(compressed.toString())} bytes.`
       );
 
     return compressed;
@@ -23,8 +29,12 @@ export class Compressor {
    * @description Decompress a string with gzip.
    */
   public decompress(input: Buffer) {
-    //const decompressed = gunzipSync(Buffer.from(input, 'base64')).toString('utf8');
     const decompressed = gunzipSync(input).toString('utf8');
+
+    if (!this.isSilent)
+      console.log(
+        `The original string was ${this.size(input)} bytes and the decompressed string is ${this.size(decompressed)} bytes.`
+      );
 
     return decompressed;
   }
@@ -32,7 +42,7 @@ export class Compressor {
   /**
    * @description Get the byte size of a string.
    */
-  private size(input: string) {
+  private size(input: string | Buffer) {
     return new Blob([input]).size;
   }
 }
