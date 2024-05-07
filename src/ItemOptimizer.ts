@@ -1,5 +1,3 @@
-import { gzipSync } from 'zlib';
-
 import { DatasetHeaderType, Field, Header, Headers, Item } from './interfaces/Dataset.js';
 import {
   StoredFieldRepresentation,
@@ -89,20 +87,5 @@ export class ItemOptimizer {
       i: data.id,
       f: deflatedFields
     } as StoredItemRepresentation;
-  }
-
-  /**
-   * @description Compress a string with gzip.
-   */
-  public compress(input: string) {
-    const bytes = (str: string) => new Blob([str]).size;
-
-    const compressed = gzipSync(input);
-
-    console.log(
-      `The original string was ${bytes(input)} bytes and the compressed string was ${bytes(compressed.toString())} bytes.`
-    );
-
-    return compressed;
   }
 }
