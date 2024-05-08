@@ -30,6 +30,7 @@ export type StoredHeaderRepresentation = {
 export type StoredItemRepresentation = {
   i: string;
   f: StoredFieldRepresentation[];
+  c: string;
 };
 
 export type StoredFieldRepresentation = {

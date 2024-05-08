@@ -68,7 +68,8 @@ export class ItemOptimizer {
 
     return {
       id: data.i,
-      fields: inflatedFields
+      fields: inflatedFields,
+      createdAt: data.c
     } as Item;
   }
 
@@ -85,7 +86,8 @@ export class ItemOptimizer {
 
     return {
       i: data.id,
-      f: deflatedFields
+      f: deflatedFields,
+      c: data.createdAt
     } as StoredItemRepresentation;
   }
 }

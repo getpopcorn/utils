@@ -33,6 +33,7 @@ export type MeilisearchItem = {
 export type Item = {
   id: string;
   fields: Field[];
+  createdAt: string;
 };
 
 export type Field = {
