@@ -563,7 +563,7 @@ packages:
   /@getpopcorn/validator@0.0.10:
     resolution: {integrity: sha512-UPZRzVEm1uT8BE2yv26fNLI+SSjfcW2b7nNW/FGZq3WXIyFBNdPh9+eK2jzPVgF52IlPtSfUBGnBGbUJbLqnDA==, tarball: https://npm.pkg.github.com/download/@getpopcorn/validator/0.0.10/44453174cf3c2cde38ca52f764993213a3ac8a0b}
     dependencies:
-      mikrovalid: 1.0.14
+      mikrovalid: 1.0.19
     dev: true
 
   /@humanwhocodes/config-array@0.11.14:
@@ -1994,8 +1994,8 @@ packages:
     resolution: {integrity: sha512-m9RXmtGURDBs1uUaQmRLn0eF9rDdA/GlCjZC+xhQU4Xpu1+D1FwEGRIJWbuXcBENDDV2y62CbaaKMcvtWT5Mfg==}
     dev: false
 
-  /mikrovalid@1.0.14:
-    resolution: {integrity: sha512-X4/poo2v4+aWFARQqe+8MTBWhbIHhaqyqqRNxxL9dgMFGrIROqRS+YG24e2xPnpUx6RU3Ms0kMV0oe64LLPPeQ==}
+  /mikrovalid@1.0.19:
+    resolution: {integrity: sha512-rTk1/BQAVmHR/jBQUieRZWp2B9XkrdQRHwm5WG/bFjCQ872JMLWzlPQb+pUhULPMweoLXOH6AK58lFu0J5a90A==}
     dev: true
 
   /mimic-fn@2.1.0:

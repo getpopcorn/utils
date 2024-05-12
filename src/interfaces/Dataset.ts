@@ -51,3 +51,8 @@ export type DatasetGetResult = {
   headers: Headers;
   items: MeilisearchItem[];
 };
+
+export type DatasetInputValidationResult = {
+  success: boolean;
+  errors: string[];
+};

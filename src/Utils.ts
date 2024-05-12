@@ -15,6 +15,7 @@ import {
   TransformResult,
   TransformSettings
 } from './interfaces/flows/Transform.js';
+import { DatasetInputValidationResult, Field } from './interfaces/Dataset.js';
 
 /**
  * @description Utils are, as you can guess, utilities that
@@ -164,6 +165,115 @@ export class Utils {
     return objects
       .map((object) => JSON.parse(JSON.stringify(object)))
       .reduce((merged, current) => ({ ...merged, ...current }), {});
+  }
+
+  /**
+   * @description Check if an input object matches a Dataset configuration.
+   *
+   * @example
+   * const input = {
+   *   name: 'Sam Person',
+   *   appointment: {
+   *     time: '10:00',
+   *     location: 'Central',
+   *     priority: 2
+   *   },
+   *   caseCode: 46
+   * };
+   *
+   * const config = [
+   *   {
+   *     headerRef: 'j2d8y22d',
+   *     type: 'short_text',
+   *     value: '{input.name}',
+   *     isRequired: true
+   *   },
+   *   {
+   *     headerRef: 'kjhf298y',
+   *     type: 'short_text',
+   *     value: '{input.appointment.time}',
+   *     isRequired: true
+   *   },
+   *   {
+   *     headerRef: 'f2oifh9q',
+   *     type: 'short_text',
+   *     value: '{input.appointment.location}',
+   *     isRequired: true
+   *   },
+   *   {
+   *     headerRef: 'fb1891g2',
+   *     type: 'short_text',
+   *     value: '{input.appointment.priority}',
+   *     isRequired: false
+   *   },
+   *   {
+   *     headerRef: 'mbhwf8ax',
+   *     type: 'number',
+   *     value: '{input.caseCode}',
+   *     isRequired: true
+   *   }
+   * ];
+   *
+   * const { success, errors } = inputMatchesDatasetConfig(input, configs);
+   */
+  public inputMatchesDatasetConfig(
+    input: Record<string, any>,
+    config: Record<string, any>[]
+  ): DatasetInputValidationResult {
+    const errors: string[] = [];
+
+    const checkInputValue = (item: Record<string, any>) => {
+      const value = this.getReferencedValue(item.value, input);
+
+      const exists = value !== '__KEY_NOT_FOUND__';
+      if (!exists && item.isRequired) errors.push(`Missing value for "${value}"`);
+
+      const isValidType = validateType(item.type, value);
+      if (!isValidType) errors.push(`Invalid type for "${value}"`);
+    };
+
+    const validateType = (type: string, value: unknown) => {
+      if (type === 'short_text' && typeof value === 'string') return true;
+      if (type === 'number' && typeof value === 'number') return true;
+    };
+
+    config.forEach((item: Record<string, any>) => checkInputValue(item));
+
+    return { success: errors.length === 0, errors };
+  }
+
+  /**
+   * @description Transform an object into a valid Dataset input payload.
+   */
+  public inputToDatasetPayload(input: Record<string, any>, config: Record<string, any>[]) {
+    const payload: Field[] = [];
+
+    config.forEach((item: Record<string, any>) => {
+      const headerRef = item.headerRef;
+      const value = item.value;
+      if (!headerRef || !value) {
+        console.error(
+          'Missing "headerRef" and/or "value" when converting input to Dataset payload!'
+        );
+        return;
+      }
+
+      const val = this.getReferencedValue(value, input);
+      payload.push({ headerRef, value: val });
+    });
+
+    return payload;
+  }
+
+  /**
+   * @description Get the referenced value, either literally or if used within a variable-type format.
+   */
+  private getReferencedValue(value: string, input: Record<string, any>) {
+    const isReferenceValue = value.startsWith('{input.');
+    return this.getNestedValue(
+      isReferenceValue ? value.replace('{input.', '').replace('}', '') : value,
+      input
+    );
   }
 
   /**

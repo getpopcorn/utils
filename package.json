@@ -1,6 +1,6 @@
 {
   "name": "@getpopcorn/utils",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Various common utilities and tools",
   "author": "Popcorn Cloud",
   "license": "SEE LICENSE IN LICENSE",
@@ -38,9 +38,9 @@
     "@typescript-eslint/eslint-plugin": "7",
     "@typescript-eslint/parser": "7",
     "@vitest/coverage-v8": "1",
+    "eslint": "8",
     "eslint-config-prettier": "9",
     "eslint-plugin-prettier": "5",
-    "eslint": "8",
     "husky": "9",
     "prettier": "3",
     "ts-node": "10",
