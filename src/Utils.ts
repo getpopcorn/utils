@@ -228,7 +228,7 @@ export class Utils {
       const exists = value !== '__KEY_NOT_FOUND__';
       if (!exists && item.isRequired) errors.push(`Missing value for "${value}"`);
 
-      const isValidType = validateType(item.type, value);
+      const isValidType = validateType(item.headerType, value);
       if (!isValidType) errors.push(`Invalid type for "${value}"`);
     };
 

@@ -49,7 +49,7 @@ test('It should not handle incomplete configs', () => {
     },
     {
       headerRef: 'kjhf298y',
-      type: 'short_text',
+      headerType: 'short_text',
       value: '{input.appointment.time}',
       isRequired: true
     }
@@ -66,7 +66,7 @@ test('It should handle non-existing keys', () => {
   const config = [
     {
       headerRef: 'kjhf298y',
-      type: 'short_text',
+      headerType: 'short_text',
       value: '{input.a.b.c.xyz}',
       isRequired: true
     }
@@ -91,7 +91,7 @@ test('It should return false for an input that does not match a Dataset configur
   expect(success).toBe(expected);
 });
 
-test('It should return false for an input that does not have correct types for a Dataset configuration', () => {
+test('It should return false for an input that does not have correct header types for a Dataset configuration', () => {
   const expected = false;
 
   const input = JSON.parse(JSON.stringify(validDatasetInput));
