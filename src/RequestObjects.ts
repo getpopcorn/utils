@@ -1,11 +1,11 @@
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-export const datasetGetRequest = (datasetApiBaseUrl: string, datasetId: string) => ({
+export const datasetGetRequestObject = (datasetApiBaseUrl: string, datasetId: string) => ({
   endpoint: `${datasetApiBaseUrl}/dataset/${datasetId}`,
   method: 'GET' as HttpMethod
 });
 
-export const datasetAddRequest = (
+export const datasetAddRequestObject = (
   datasetApiBaseUrl: string,
   datasetId: string,
   resourceType: string,
@@ -16,7 +16,7 @@ export const datasetAddRequest = (
   message: JSON.stringify(data)
 });
 
-export const datasetDeleteRequest = (
+export const datasetDeleteRequestObject = (
   datasetApiBaseUrl: string,
   datasetId: string,
   resourceType: string,
@@ -26,7 +26,7 @@ export const datasetDeleteRequest = (
   method: 'DELETE' as HttpMethod
 });
 
-export const datasetUpdateRequest = (
+export const datasetUpdateRequestObject = (
   datasetApiBaseUrl: string,
   datasetId: string,
   resourceType: string,
