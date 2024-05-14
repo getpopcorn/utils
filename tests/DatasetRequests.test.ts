@@ -6,13 +6,13 @@ import { datasetGetResponse } from '../testdata/dataset.js';
 
 const datasetApiBaseUrl = 'https://www.mockachino.com/6e5778ca-638a-4c';
 const datasetId = 'asdf1234';
-const id = 'abc123';
+const id = 'item123';
 const input = {
   something: 'my value here'
 };
 const properties = [
   {
-    headerRef: 'abc123',
+    headerRef: 'item123',
     headerType: 'short_text',
     value: '{input.something}',
     isRequired: true
@@ -23,7 +23,9 @@ const properties = [
  * POSITIVE TESTS
  */
 test('It should make a Dataset create request', async () => {
-  const expected = true;
+  const expected = {
+    message: 'OK'
+  };
 
   const result = await new DatasetRequests().create({
     datasetApiBaseUrl,
@@ -33,11 +35,13 @@ test('It should make a Dataset create request', async () => {
     properties
   });
 
-  expect(result).toBe(expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should make a Dataset create request for a specific ID', async () => {
-  const expected = true;
+  const expected = {
+    message: 'OK'
+  };
 
   const result = await new DatasetRequests().create({
     datasetApiBaseUrl,
@@ -47,11 +51,13 @@ test('It should make a Dataset create request for a specific ID', async () => {
     properties
   });
 
-  expect(result).toBe(expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should make a Dataset update request', async () => {
-  const expected = true;
+  const expected = {
+    message: 'OK'
+  };
 
   const result = await new DatasetRequests().update({
     datasetApiBaseUrl,
@@ -61,11 +67,13 @@ test('It should make a Dataset update request', async () => {
     properties
   });
 
-  expect(result).toBe(expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should make a Dataset delete request', async () => {
-  const expected = true;
+  const expected = {
+    message: 'OK'
+  };
 
   const result = await new DatasetRequests().delete({
     datasetApiBaseUrl,
@@ -73,7 +81,7 @@ test('It should make a Dataset delete request', async () => {
     id
   });
 
-  expect(result).toBe(expected);
+  expect(result).toMatchObject(expected);
 });
 
 test('It should make a Dataset get request', async () => {

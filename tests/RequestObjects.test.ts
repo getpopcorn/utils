@@ -8,7 +8,7 @@ import {
 } from '../src/RequestObjects.js';
 
 const datasetApiBaseUrl = 'https://api.company.com';
-const datasetId = 'abc123';
+const datasetId = 'item123';
 const resourceType = 'item';
 const data = {
   a: { b: 'c' }
@@ -17,7 +17,7 @@ const resourceId = 'qwerty';
 
 test('It should make a Dataset add request', () => {
   const expected = {
-    endpoint: 'https://api.company.com/dataset/abc123/item',
+    endpoint: 'https://api.company.com/dataset/item123/item',
     method: 'PUT',
     message: '{"a":{"b":"c"}}'
   };
@@ -29,7 +29,7 @@ test('It should make a Dataset add request', () => {
 
 test('It should make a Dataset update request', () => {
   const expected = {
-    endpoint: 'https://api.company.com/dataset/abc123/item/qwerty',
+    endpoint: 'https://api.company.com/dataset/item123/item/qwerty',
     method: 'PATCH',
     message: '{"a":{"b":"c"}}'
   };
@@ -47,7 +47,7 @@ test('It should make a Dataset update request', () => {
 
 test('It should make a Dataset delete request', () => {
   const expected = {
-    endpoint: 'https://api.company.com/dataset/abc123/item/qwerty',
+    endpoint: 'https://api.company.com/dataset/item123/item/qwerty',
     method: 'DELETE'
   };
 
@@ -57,7 +57,7 @@ test('It should make a Dataset delete request', () => {
 
 test('It should make a Dataset get request', () => {
   const expected = {
-    endpoint: 'https://api.company.com/dataset/abc123',
+    endpoint: 'https://api.company.com/dataset/item123',
     method: 'GET'
   };
 

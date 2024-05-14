@@ -571,14 +571,13 @@ export class Utils {
     })
       .then((response: any) => {
         if (response.status >= 200 && response.status < 300) return response.text();
-        const errorMessage = `Not OK: Status code is ${response.status}`;
-        console.error(errorMessage);
-        return { popcorn_error: errorMessage };
+        else {
+          const errorMessage = `Not OK: Status code is "${response.status}" at URL "${endpoint}" (using method "${method}")`;
+          console.error(errorMessage);
+          return { popcorn_error: errorMessage };
+        }
       })
-      .then((response: any) => {
-        if (this.isJson(response)) return JSON.parse(response);
-        return response;
-      });
+      .then((response: any) => (this.isJson(response) ? JSON.parse(response) : response));
   }
 
   /**

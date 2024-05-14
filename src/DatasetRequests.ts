@@ -44,9 +44,9 @@ export class DatasetRequests {
   public async delete(options: DatasetDeleteOptions) {
     const { datasetApiBaseUrl, datasetId, id } = options;
 
-    await this.utils.request(datasetDeleteRequestObject(datasetApiBaseUrl, datasetId, 'item', id));
-
-    return true;
+    return await this.utils.request(
+      datasetDeleteRequestObject(datasetApiBaseUrl, datasetId, 'item', id)
+    );
   }
 
   /**
@@ -65,11 +65,9 @@ export class DatasetRequests {
 
     const payload = this.utils.inputToDatasetPayload(input, properties);
 
-    await this.utils.request(
+    return await this.utils.request(
       datasetAddRequestObject(datasetApiBaseUrl, datasetId, resourcePath, payload)
     );
-
-    return true;
   }
 
   /**
@@ -87,10 +85,8 @@ export class DatasetRequests {
 
     const payload = this.utils.inputToDatasetPayload(input, properties);
 
-    await this.utils.request(
+    return await this.utils.request(
       datasetUpdateRequestObject(datasetApiBaseUrl, datasetId, 'item', id, payload)
     );
-
-    return true;
   }
 }

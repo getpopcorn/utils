@@ -2,7 +2,7 @@
 const endpointBase = 'https://www.mockachino.com/6e5778ca-638a-4c';
 
 export const validFlowInitialStateSmall = {
-  id: 'abc123',
+  id: 'item123',
   settings: { description: 'Some description here.' },
   components: [
     {
@@ -25,7 +25,7 @@ export const validFlowInitialStateSmall = {
 };
 
 export const validFlowSettings = {
-  id: 'abc123',
+  id: 'item123',
   settings: { description: 'Some description here.' },
   components: []
 };
@@ -36,7 +36,7 @@ export const validFlowInitialState1 = {
   components: [
     {
       name: 'Start',
-      id: 'abc123',
+      id: 'item123',
       type: 'start',
       settings: {
         triggers: {
@@ -138,7 +138,7 @@ export const validFlowInitialState2 = {
   components: [
     {
       name: 'Start',
-      id: 'abc123',
+      id: 'item123',
       type: 'start',
       settings: {
         triggers: {
@@ -257,7 +257,7 @@ export const validFlowInitialStateWithProcess = {
   components: [
     {
       name: 'Start',
-      id: 'abc123',
+      id: 'item123',
       type: 'start',
       settings: {
         triggers: {
