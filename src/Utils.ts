@@ -170,6 +170,9 @@ export class Utils {
   /**
    * @description Check if an input object matches a Dataset configuration.
    *
+   * Note that it does not fail on extraneous properties, as it picks only
+   * what the configuration expects (as references) and/or provides as directly assigned values.
+   *
    * @example
    * const input = {
    *   name: 'Sam Person',
@@ -226,7 +229,7 @@ export class Utils {
       const value = this.getReferencedValue(item.value, input);
 
       const exists = value !== '__KEY_NOT_FOUND__';
-      if (!exists && item.isRequired) errors.push(`Missing value for "${value}"`);
+      if (!exists && item.isRequired) errors.push(`Missing value for "${item.value}"`);
 
       const isValidType = validateType(item.headerType, value);
       if (!isValidType) errors.push(`Invalid type for "${value}"`);
@@ -268,12 +271,16 @@ export class Utils {
   /**
    * @description Get the referenced value, either literally or if used within a variable-type format.
    */
-  private getReferencedValue(value: string, input: Record<string, any>) {
-    const isReferenceValue = value.startsWith('{input.');
-    return this.getNestedValue(
-      isReferenceValue ? value.replace('{input.', '').replace('}', '') : value,
-      input
-    );
+  private getReferencedValue(value: unknown, input: Record<string, any>) {
+    const isString = typeof value === 'string';
+    const isReferenceValue = isString ? value.startsWith('{input.') : false;
+    const fixedValue =
+      isString && isReferenceValue ? value.replace('{input.', '').replace('}', '') : value;
+
+    if (typeof fixedValue === 'string' && isString && isReferenceValue)
+      return this.getNestedValue(fixedValue, input);
+
+    return fixedValue;
   }
 
   /**

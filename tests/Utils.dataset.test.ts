@@ -2,7 +2,11 @@ import { test, expect } from 'vitest';
 
 import { Utils } from '../src/index.js';
 
-import { validDatasetInput, validDatasetConfig } from '../testdata/dataset.js';
+import {
+  validDatasetInput,
+  validDatasetConfig,
+  validDatasetConfigDirectAssignment
+} from '../testdata/dataset.js';
 
 /**
  * POSITIVE TESTS
@@ -26,7 +30,7 @@ test('It should return true for an input that is missing optional properties, bu
   expect(success).toBe(expected);
 });
 
-test('It should return a Dataset payload (create/update) from a valid input and Dataset configuration', () => {
+test('It should return a Dataset payload (create/update) from a valid input (using a reference value) and Dataset configuration', () => {
   const expected = [
     { headerRef: 'j2d8y22d', value: 'Sam Person' },
     { headerRef: 'kjhf298y', value: '10:00' },
@@ -36,6 +40,23 @@ test('It should return a Dataset payload (create/update) from a valid input and 
   ];
 
   const result = new Utils().inputToDatasetPayload(validDatasetInput, validDatasetConfig);
+
+  expect(result).toMatchObject(expected);
+});
+
+test('It should return a Dataset payload (create/update) from a valid input (using a direct-assigned value) and Dataset configuration', () => {
+  const expected = [
+    { headerRef: 'j2d8y22d', value: 'Sam Person' },
+    { headerRef: 'kjhf298y', value: '10:00' },
+    { headerRef: 'f2oifh9q', value: 'Central' },
+    { headerRef: 'fb1891g2', value: 2 },
+    { headerRef: 'mbhwf8ax', value: 46 }
+  ];
+
+  const result = new Utils().inputToDatasetPayload(
+    validDatasetInput,
+    validDatasetConfigDirectAssignment
+  );
 
   expect(result).toMatchObject(expected);
 });
