@@ -271,7 +271,7 @@ export class Utils {
   /**
    * @description Get the referenced value, either literally or if used within a variable-type format.
    */
-  private getReferencedValue(value: unknown, input: Record<string, any>) {
+  public getReferencedValue(value: unknown, input: Record<string, any>) {
     const isString = typeof value === 'string';
     const isReferenceValue = isString ? value.startsWith('{input.') : false;
     const fixedValue =
