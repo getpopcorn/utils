@@ -1,3 +1,5 @@
+import { Field, Header } from './Dataset.js';
+
 type DatasetOptionsBase = {
   datasetApiBaseUrl: string;
   datasetId: string;
@@ -11,6 +13,6 @@ export type DatasetDeleteOptions = DatasetOptionsBase & {
 
 export type DatasetCreateUpdateOptions = DatasetOptionsBase &
   DatasetDeleteOptions & {
-    input: Record<string, any>;
-    properties: Record<string, any>[];
+    input: Field[];
+    headers: Header[];
   };

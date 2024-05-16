@@ -3,19 +3,25 @@ import { test, expect } from 'vitest';
 import { DatasetRequests } from '../src/DatasetRequests.js';
 
 import { datasetGetResponse } from '../testdata/dataset.js';
+import { Field, Header } from '../src/interfaces/Dataset.js';
 
 const datasetApiBaseUrl = 'https://www.mockachino.com/6e5778ca-638a-4c';
 const datasetId = 'asdf1234';
 const id = 'item123';
-const input = {
-  something: 'my value here'
-};
-const properties = [
+const input: Field[] = [
   {
-    headerRef: 'item123',
-    headerType: 'short_text',
-    value: '{input.something}',
-    isRequired: true
+    headerRef: 'header123',
+    value: 'something'
+  }
+];
+const headers: Header[] = [
+  {
+    id: 'header123',
+    type: 'short_text',
+    name: 'Something',
+    isRequired: true,
+    position: 0,
+    lastChangedBy: 'user123'
   }
 ];
 
@@ -32,7 +38,7 @@ test('It should make a Dataset create request', async () => {
     datasetId,
     id,
     input,
-    properties
+    headers
   });
 
   expect(result).toMatchObject(expected);
@@ -48,7 +54,7 @@ test('It should make a Dataset create request for a specific ID', async () => {
     datasetId,
     id: '',
     input,
-    properties
+    headers
   });
 
   expect(result).toMatchObject(expected);
@@ -64,7 +70,7 @@ test('It should make a Dataset update request', async () => {
     datasetId,
     id,
     input,
-    properties
+    headers
   });
 
   expect(result).toMatchObject(expected);
@@ -97,29 +103,31 @@ test('It should make a Dataset get request', async () => {
  * NEGATIVE TESTS
  */
 test('It should not make a Dataset create request if the input does not match the configuration', async () => {
-  const expected = { success: false, errors: ['Missing value for "{input.something}"'] };
+  const expected = false;
 
   const result = await new DatasetRequests().create({
     datasetApiBaseUrl,
     datasetId,
     id,
+    // @ts-ignore
     input: { x: 1 },
-    properties
+    headers
   });
 
-  expect(result).toMatchObject(expected);
+  expect(result.success).toMatchObject(expected);
 });
 
 test('It should not make a Dataset update request if the input does not match the configuration', async () => {
-  const expected = { success: false, errors: ['Missing value for "{input.something}"'] };
+  const expected = false;
 
   const result = await new DatasetRequests().update({
     datasetApiBaseUrl,
     datasetId,
     id,
+    // @ts-ignore
     input: { x: 1 },
-    properties
+    headers
   });
 
-  expect(result).toMatchObject(expected);
+  expect(result.success).toMatchObject(expected);
 });

@@ -1,76 +1,66 @@
-export const validDatasetInput = {
-  name: 'Sam Person',
-  appointment: {
-    time: '10:00',
-    location: 'Central',
-    priority: 2
-  },
-  caseCode: 46
-};
-
-export const validDatasetConfig = [
+export const validDatasetInput = [
   {
     headerRef: 'j2d8y22d',
-    headerType: 'short_text',
-    value: '{input.name}',
-    isRequired: true
+    value: 'Sam Person'
   },
   {
     headerRef: 'kjhf298y',
-    headerType: 'short_text',
-    value: '{input.appointment.time}',
-    isRequired: true
+    value: '10:00'
   },
   {
     headerRef: 'f2oifh9q',
-    headerType: 'short_text',
-    value: '{input.appointment.location}',
-    isRequired: true
+    value: 'Central'
   },
   {
     headerRef: 'fb1891g2',
-    headerType: 'number',
-    value: '{input.appointment.priority}',
-    isRequired: false
+    value: 2
   },
   {
     headerRef: 'mbhwf8ax',
-    headerType: 'number',
-    value: '{input.caseCode}',
-    isRequired: true
+    value: 46
   }
 ];
 
-export const validDatasetConfigDirectAssignment = [
+export const validDatasetConfig = [
   {
-    headerRef: 'j2d8y22d',
-    headerType: 'short_text',
-    value: 'Sam Person',
-    isRequired: true
+    id: 'j2d8y22d',
+    type: 'short_text',
+    name: 'Name',
+    isRequired: true,
+    position: 0,
+    lastChangedBy: 'user123'
   },
   {
-    headerRef: 'kjhf298y',
-    headerType: 'short_text',
-    value: '10:00',
-    isRequired: true
+    id: 'kjhf298y',
+    type: 'short_text',
+    name: 'Time',
+    isRequired: true,
+    position: 1,
+    lastChangedBy: 'user123'
   },
   {
-    headerRef: 'f2oifh9q',
-    headerType: 'short_text',
-    value: 'Central',
-    isRequired: true
+    id: 'f2oifh9q',
+    type: 'short_text',
+    name: 'Location',
+    isRequired: true,
+    position: 2,
+    lastChangedBy: 'user123'
   },
   {
-    headerRef: 'fb1891g2',
-    headerType: 'number',
-    value: 2,
-    isRequired: false
+    id: 'fb1891g2',
+    type: 'number',
+    name: 'Priority',
+    isRequired: true,
+    position: 3,
+    lastChangedBy: 'user123'
   },
   {
-    headerRef: 'mbhwf8ax',
-    headerType: 'number',
-    value: 46,
-    isRequired: true
+    id: 'mbhwf8ax',
+    type: 'number',
+    name: 'Case Code',
+    isRequired: false,
+    position: 4,
+    lastChangedBy: 'user123'
   }
 ];
 
