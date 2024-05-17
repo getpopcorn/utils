@@ -15,7 +15,7 @@ import {
   TransformResult,
   TransformSettings
 } from './interfaces/flows/Transform.js';
-import { DatasetInputValidationResult } from './interfaces/Dataset.js';
+import { DatasetInputValidationResult, Field, Header } from './interfaces/Dataset.js';
 
 /**
  * @description Utils are, as you can guess, utilities that
@@ -168,95 +168,129 @@ export class Utils {
   }
 
   /**
-   * @description Check if an input object matches a Dataset configuration.
+   * @description Check if an input object matches a Dataset's Headers.
    *
    * Note that it does not fail on extraneous properties, as it picks only
    * what the configuration expects (as references) and/or provides as directly assigned values.
    *
    * @example
-   * const input = {
-   *   name: 'Sam Person',
-   *   appointment: {
-   *     time: '10:00',
-   *     location: 'Central',
-   *     priority: 2
+   * const input = [
+   *   {
+   *     headerRef: 'j2d8y22d',
+   *     value: 'Sam Person'
    *   },
-   *   caseCode: 46
-   * };
+   *   {
+   *     headerRef: 'kjhf298y',
+   *     value: '10:00'
+   *   },
+   *   {
+   *     headerRef: 'f2oifh9q',
+   *     value: 'Central'
+   *   },
+   *   {
+   *     headerRef: 'fb1891g2',
+   *     value: 2
+   *   },
+   *   {
+   *     headerRef: 'mbhwf8ax',
+   *     value: 46
+   *   }
+   * ];
    *
    * const config = [
    *   {
    *     id: 'j2d8y22d',
    *     type: 'short_text',
-   *     value: '{input.name}',
-   *     isRequired: true
+   *     name: 'Name',
+   *     isRequired: true,
+   *     position: 0,
+   *     lastChangedBy: 'user123'
    *   },
    *   {
    *     id: 'kjhf298y',
    *     type: 'short_text',
-   *     value: '{input.appointment.time}',
-   *     isRequired: true
+   *     name: 'Time',
+   *     isRequired: true,
+   *     position: 1,
+   *     lastChangedBy: 'user123'
    *   },
    *   {
    *     id: 'f2oifh9q',
    *     type: 'short_text',
-   *     value: '{input.appointment.location}',
-   *     isRequired: true
+   *     name: 'Location',
+   *     isRequired: true,
+   *     position: 2,
+   *     lastChangedBy: 'user123'
    *   },
    *   {
    *     id: 'fb1891g2',
-   *     type: 'short_text',
-   *     value: '{input.appointment.priority}',
-   *     isRequired: false
+   *     type: 'number',
+   *     name: 'Priority',
+   *     isRequired: true,
+   *     position: 3,
+   *     lastChangedBy: 'user123'
    *   },
    *   {
    *     id: 'mbhwf8ax',
    *     type: 'number',
-   *     value: '{input.caseCode}',
-   *     isRequired: true
+   *     name: 'Case Code',
+   *     isRequired: false,
+   *     position: 4,
+   *     lastChangedBy: 'user123'
    *   }
    * ];
    *
-   * const { success, errors } = inputMatchesDatasetConfig(input, configs);
+   * const { success, errors } = inputToDatasetPayload(input, configs);
    */
-  public inputMatchesDatasetConfig(
+  public inputToDatasetPayload(
     input: Record<string, any>,
-    config: Record<string, any>[]
+    headers: Header[],
+    config: Record<string, any>
   ): DatasetInputValidationResult {
-    if (!Array.isArray(input)) input = [input];
-
     const errors: string[] = [];
+    let requiredHeaders = headers?.filter((header) => header.isRequired) || [];
+    const payload: Field[] = [];
 
-    const checkInputValue = (header: Record<string, any>) => {
-      const matchedItem = input.find((field: Record<string, any>) => field.headerRef === header.id);
+    if (!config || JSON.stringify(config) === '{}') errors.push('No configuration provided');
+    else {
+      Object.entries(config).forEach(([headerRef, configValue]) => {
+        const header = headers.find((header) => header.id === headerRef) as Header;
+        const value = this.getReferencedValue(configValue, input);
 
-      const value = this.getReferencedValue(matchedItem?.value, input);
+        const exists = !!value && value !== '__KEY_NOT_FOUND__';
+        if (!exists && header.isRequired) errors.push(`Missing value for "${configValue}"`);
 
-      const exists = !!value && value !== '__KEY_NOT_FOUND__';
-      if (!exists && header.isRequired) errors.push(`Missing value for "${header.value}"`);
+        const isValidType = this.validateType(header.type, value);
+        if (exists && !isValidType) errors.push(`Invalid type for "${value}"`);
 
-      const isValidType = validateType(header.type, value);
-      if (exists && !isValidType) errors.push(`Invalid type for "${value}"`);
-    };
+        if (exists) {
+          payload.push({ headerRef, value });
+          requiredHeaders = requiredHeaders.filter((header) => header.id !== headerRef);
+        }
+      });
+    }
 
-    const validateType = (type: string, value: unknown) => {
-      if (type === 'short_text' && typeof value === 'string') return true;
-      if (type === 'number' && typeof value === 'number') return true;
-    };
-
-    config.forEach((header: Record<string, any>) => checkInputValue(header));
-
-    return { success: errors.length === 0, errors };
+    const success = requiredHeaders.length === 0;
+    return { success, errors, payload: success ? payload : [] };
   }
+
+  /**
+   * @description Verify that the Header type and the value match.
+   */
+  private validateType = (type: string, value: unknown) => {
+    if (type === 'short_text' && typeof value === 'string') return true;
+    if (type === 'number' && typeof value === 'number') return true;
+  };
 
   /**
    * @description Get the referenced value, either literally or if used within a variable-type format.
    */
   public getReferencedValue(value: unknown, input: Record<string, any>) {
     const isString = typeof value === 'string';
-    const isReferenceValue = isString ? value.startsWith('{input.') : false;
+    const inputStart = '{input.';
+    const isReferenceValue = isString ? value.startsWith(inputStart) : false;
     const fixedValue =
-      isString && isReferenceValue ? value.replace('{input.', '').replace('}', '') : value;
+      isString && isReferenceValue ? value.replace(inputStart, '').replace('}', '') : value;
 
     if (typeof fixedValue === 'string' && isString && isReferenceValue)
       return this.getNestedValue(fixedValue, input);

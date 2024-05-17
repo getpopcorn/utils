@@ -41,7 +41,7 @@ export type Field = {
    * Which header it belongs to. References the header's ID.
    */
   headerRef: string;
-  value: string;
+  value: unknown;
 };
 
 export type DatasetHeaderType = 'short_text' | 'number';
@@ -55,4 +55,5 @@ export type DatasetGetResult = {
 export type DatasetInputValidationResult = {
   success: boolean;
   errors: string[];
+  payload: any[];
 };

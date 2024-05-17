@@ -1,4 +1,16 @@
-export const validDatasetInput = [
+import { Field, Header } from '../src/interfaces/Dataset.js';
+
+export const validDatasetInput = {
+  name: 'Sam Person',
+  site: {
+    time: '10:00',
+    location: 'Central'
+  },
+  priority: 2,
+  caseCode: 46
+};
+
+export const validDatasetPayload: Field[] = [
   {
     headerRef: 'j2d8y22d',
     value: 'Sam Person'
@@ -21,7 +33,7 @@ export const validDatasetInput = [
   }
 ];
 
-export const validDatasetConfig = [
+export const validDatasetHeaders: Header[] = [
   {
     id: 'j2d8y22d',
     type: 'short_text',
@@ -63,6 +75,14 @@ export const validDatasetConfig = [
     lastChangedBy: 'user123'
   }
 ];
+
+export const validDatasetConfig = {
+  j2d8y22d: '{input.name}',
+  kjhf298y: '{input.site.time}',
+  f2oifh9q: '{input.site.location}',
+  fb1891g2: '{input.priority}',
+  mbhwf8ax: '{input.caseCode}'
+};
 
 export const datasetGetResponse = {
   metadata: { deletedAt: '' },

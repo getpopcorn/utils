@@ -13,7 +13,7 @@ import {
 } from './interfaces/DatasetRequests.js';
 
 /**
- * @description TODO
+ * @description Easily make requests to the Dataset API.
  */
 export class DatasetRequests {
   utils: Utils;
@@ -56,15 +56,15 @@ export class DatasetRequests {
    * dataset.create(input);
    */
   public async create(options: DatasetCreateUpdateOptions) {
-    const { datasetApiBaseUrl, datasetId, id, input, headers } = options;
+    const { datasetApiBaseUrl, datasetId, id, input, headers, config } = options;
 
     const resourcePath = id ? `item/${id}` : `item`;
 
-    const { success, errors } = this.utils.inputMatchesDatasetConfig(input, headers);
-    if (!success) return { success, errors };
+    const payload = this.utils.inputToDatasetPayload(input, headers, config);
+    if (!payload.success) return { success: payload.success, errors: payload.errors };
 
     return await this.utils.request(
-      datasetAddRequestObject(datasetApiBaseUrl, datasetId, resourcePath, input)
+      datasetAddRequestObject(datasetApiBaseUrl, datasetId, resourcePath, payload)
     );
   }
 
@@ -76,10 +76,10 @@ export class DatasetRequests {
    * dataset.update(input);
    */
   public async update(options: DatasetCreateUpdateOptions) {
-    const { datasetApiBaseUrl, datasetId, id, input, headers } = options;
+    const { datasetApiBaseUrl, datasetId, id, input, headers, config } = options;
 
-    const { success, errors } = this.utils.inputMatchesDatasetConfig(input, headers);
-    if (!success) return { success, errors };
+    const payload = this.utils.inputToDatasetPayload(input, headers, config);
+    if (!payload.success) return { success: payload.success, errors: payload.errors };
 
     return await this.utils.request(
       datasetUpdateRequestObject(datasetApiBaseUrl, datasetId, 'item', id, input)
