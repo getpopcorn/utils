@@ -86,8 +86,9 @@ export class DatasetRequests {
     // @ts-ignore
     if (options?.headers && options?.config) {
       // @ts-ignore
-      payload = this.utils.inputToDatasetPayload(input, options.headers, options.config);
-      if (!payload.success) return { success: payload.success, errors: payload.errors };
+      const transformed = this.utils.inputToDatasetPayload(input, options.headers, options.config);
+      if (!transformed.success) return { success: transformed.success, errors: transformed.errors };
+      payload = transformed.payload;
     }
 
     return await this.utils.request(
@@ -129,8 +130,9 @@ export class DatasetRequests {
     // @ts-ignore
     if (options?.headers && options?.config) {
       // @ts-ignore
-      payload = this.utils.inputToDatasetPayload(input, options.headers, options.config);
-      if (!payload.success) return { success: payload.success, errors: payload.errors };
+      const transformed = this.utils.inputToDatasetPayload(input, options.headers, options.config);
+      if (!transformed.success) return { success: transformed.success, errors: transformed.errors };
+      payload = transformed.payload;
     }
 
     return await this.utils.request(
