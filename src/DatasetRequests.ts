@@ -54,7 +54,26 @@ export class DatasetRequests {
    * @description Create an item in the Dataset.
    *
    * @example
-   * dataset.create(input);
+   * // Refined format
+   * dataset.create({
+   *   datasetApiBaseUrl: 'https://api.mycompany.xyz',
+   *   datasetId: 'asdf1234',
+   *   id: 'item123',
+   *   input: [{ headerRef: 'header1', value: 'something' }]
+   * });
+   *
+   * // Raw format
+   * dataset.create({
+   *   datasetApiBaseUrl: 'https://api.mycompany.xyz',
+   *   datasetId: 'asdf1234',
+   *   id: 'item123',
+   *   // Raw JSON object
+   *   input: { ... },
+   *   // Dataset Headers object
+   *   headers: { ... },
+   *   // Mapping configuration object
+   *   config: { ... }
+   * });
    */
   public async create(options: DatasetCreateUpdateOptionsRefined | DatasetCreateUpdateOptionsRaw) {
     const { datasetApiBaseUrl, datasetId, id, input } = options;
@@ -78,10 +97,28 @@ export class DatasetRequests {
 
   /**
    * @description Update an item in the Dataset.
-   * The deletion is based on the `itemId` set in the settings.
    *
    * @example
-   * dataset.update(input);
+   * // Refined format
+   * dataset.update({
+   *   datasetApiBaseUrl: 'https://api.mycompany.xyz',
+   *   datasetId: 'asdf1234',
+   *   id: 'item123',
+   *   input: [{ headerRef: 'header1', value: 'something' }]
+   * });
+   *
+   * // Raw format
+   * dataset.update({
+   *   datasetApiBaseUrl: 'https://api.mycompany.xyz',
+   *   datasetId: 'asdf1234',
+   *   id: 'item123',
+   *   // Raw JSON object
+   *   input: { ... },
+   *   // Dataset Headers object
+   *   headers: { ... },
+   *   // Mapping configuration object
+   *   config: { ... }
+   * });
    */
   public async update(options: DatasetCreateUpdateOptionsRefined | DatasetCreateUpdateOptionsRaw) {
     const { datasetApiBaseUrl, datasetId, id, input } = options;
