@@ -11,14 +11,14 @@ import {
 
 const datasetApiBaseUrl = 'https://www.mockachino.com/6e5778ca-638a-4c';
 const datasetId = 'asdf1234';
-const id = 'item123';
+const itemId = 'item123';
 
 const refinedInput = [{ headerRef: 'abc123', value: 'something' }];
 
 /**
  * POSITIVE TESTS
  */
-test('It should make a Dataset create request', async () => {
+test('It should make a Dataset create request with an itemId', async () => {
   const expected = {
     message: 'OK'
   };
@@ -26,7 +26,41 @@ test('It should make a Dataset create request', async () => {
   const result = await new DatasetRequests().create({
     datasetApiBaseUrl,
     datasetId,
-    id,
+    itemId,
+    input: validDatasetInput,
+    headers: validDatasetHeaders,
+    config: validDatasetConfig
+  });
+
+  expect(result).toMatchObject(expected);
+});
+
+test('It should make a Dataset create request with an empty itemId', async () => {
+  const expected = {
+    message: 'OK'
+  };
+
+  const result = await new DatasetRequests().create({
+    datasetApiBaseUrl,
+    datasetId,
+    itemId: '',
+    input: validDatasetInput,
+    headers: validDatasetHeaders,
+    config: validDatasetConfig
+  });
+
+  expect(result).toMatchObject(expected);
+});
+
+test('It should make a Dataset create request with an "undefined" itemId', async () => {
+  const expected = {
+    message: 'OK'
+  };
+
+  const result = await new DatasetRequests().create({
+    datasetApiBaseUrl,
+    datasetId,
+    itemId: 'undefined',
     input: validDatasetInput,
     headers: validDatasetHeaders,
     config: validDatasetConfig
@@ -43,7 +77,7 @@ test('It should make a Dataset create request using the refined input format', a
   const result = await new DatasetRequests().create({
     datasetApiBaseUrl,
     datasetId,
-    id,
+    itemId,
     input: refinedInput
   });
 
@@ -58,7 +92,7 @@ test('It should make a Dataset create request for a specific ID', async () => {
   const result = await new DatasetRequests().create({
     datasetApiBaseUrl,
     datasetId,
-    id: 'item123',
+    itemId: 'item123',
     input: validDatasetInput,
     headers: validDatasetHeaders,
     config: validDatasetConfig
@@ -75,7 +109,7 @@ test('It should make a Dataset create request for a specific ID using the refine
   const result = await new DatasetRequests().create({
     datasetApiBaseUrl,
     datasetId,
-    id: 'item123',
+    itemId: 'item123',
     input: refinedInput
   });
 
@@ -90,7 +124,7 @@ test('It should make a Dataset update request', async () => {
   const result = await new DatasetRequests().update({
     datasetApiBaseUrl,
     datasetId,
-    id,
+    itemId,
     input: validDatasetInput,
     headers: validDatasetHeaders,
     config: validDatasetConfig
@@ -107,7 +141,7 @@ test('It should make a Dataset update request using the refined input format', a
   const result = await new DatasetRequests().update({
     datasetApiBaseUrl,
     datasetId,
-    id,
+    itemId,
     input: validDatasetInput,
     headers: validDatasetHeaders,
     config: validDatasetConfig
@@ -124,7 +158,7 @@ test('It should make a Dataset delete request', async () => {
   const result = await new DatasetRequests().delete({
     datasetApiBaseUrl,
     datasetId,
-    id
+    itemId
   });
 
   expect(result).toMatchObject(expected);
@@ -148,7 +182,7 @@ test('It should not make a Dataset create request if the input does not match th
   const result = await new DatasetRequests().create({
     datasetApiBaseUrl,
     datasetId,
-    id,
+    itemId,
     input: { x: 1 },
     headers: validDatasetHeaders,
     config: validDatasetConfig
@@ -163,7 +197,22 @@ test('It should not make a Dataset update request if the input does not match th
   const result = await new DatasetRequests().update({
     datasetApiBaseUrl,
     datasetId,
-    id,
+    itemId,
+    input: { x: 1 },
+    headers: validDatasetHeaders,
+    config: validDatasetConfig
+  });
+
+  expect(result.success).toMatchObject(expected);
+});
+
+test('It should not make a Dataset update request if the itemId is missing', async () => {
+  const expected = false;
+
+  const result = await new DatasetRequests().update({
+    datasetApiBaseUrl,
+    datasetId,
+    itemId: 'undefined',
     input: { x: 1 },
     headers: validDatasetHeaders,
     config: validDatasetConfig

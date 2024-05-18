@@ -8,7 +8,7 @@ type DatasetOptionsBase = {
 export type DatasetGetOptions = DatasetOptionsBase;
 
 export type DatasetDeleteOptions = DatasetOptionsBase & {
-  id: string;
+  itemId: string;
 };
 
 export type DatasetCreateUpdateOptionsRefined = DatasetOptionsBase &

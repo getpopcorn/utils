@@ -43,10 +43,10 @@ export class DatasetRequests {
    * dataset.delete();
    */
   public async delete(options: DatasetDeleteOptions) {
-    const { datasetApiBaseUrl, datasetId, id } = options;
+    const { datasetApiBaseUrl, datasetId, itemId } = options;
 
     return await this.utils.request(
-      datasetDeleteRequestObject(datasetApiBaseUrl, datasetId, 'item', id)
+      datasetDeleteRequestObject(datasetApiBaseUrl, datasetId, 'item', itemId)
     );
   }
 
@@ -76,9 +76,9 @@ export class DatasetRequests {
    * });
    */
   public async create(options: DatasetCreateUpdateOptionsRefined | DatasetCreateUpdateOptionsRaw) {
-    const { datasetApiBaseUrl, datasetId, id, input } = options;
+    const { datasetApiBaseUrl, datasetId, itemId, input } = options;
 
-    const resourcePath = id ? `item/${id}` : `item`;
+    const resourcePath = itemId && itemId !== 'undefined' ? `item/${itemId}` : `item`;
 
     let payload = input;
 
@@ -122,7 +122,13 @@ export class DatasetRequests {
    * });
    */
   public async update(options: DatasetCreateUpdateOptionsRefined | DatasetCreateUpdateOptionsRaw) {
-    const { datasetApiBaseUrl, datasetId, id, input } = options;
+    const { datasetApiBaseUrl, datasetId, itemId, input } = options;
+
+    if (!itemId || itemId === 'undefined')
+      return {
+        success: false,
+        errors: ['Item ID is undefined or missing when attempting to update an item!']
+      };
 
     let payload = input;
 
@@ -136,7 +142,7 @@ export class DatasetRequests {
     }
 
     return await this.utils.request(
-      datasetUpdateRequestObject(datasetApiBaseUrl, datasetId, 'item', id, payload)
+      datasetUpdateRequestObject(datasetApiBaseUrl, datasetId, 'item', itemId, payload)
     );
   }
 }
