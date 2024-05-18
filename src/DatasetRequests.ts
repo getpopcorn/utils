@@ -7,7 +7,8 @@ import {
 } from './RequestObjects.js';
 
 import {
-  DatasetCreateUpdateOptions,
+  DatasetCreateUpdateOptionsRaw,
+  DatasetCreateUpdateOptionsRefined,
   DatasetDeleteOptions,
   DatasetGetOptions
 } from './interfaces/DatasetRequests.js';
@@ -55,13 +56,20 @@ export class DatasetRequests {
    * @example
    * dataset.create(input);
    */
-  public async create(options: DatasetCreateUpdateOptions) {
-    const { datasetApiBaseUrl, datasetId, id, input, headers, config } = options;
+  public async create(options: DatasetCreateUpdateOptionsRefined | DatasetCreateUpdateOptionsRaw) {
+    const { datasetApiBaseUrl, datasetId, id, input } = options;
 
     const resourcePath = id ? `item/${id}` : `item`;
 
-    const payload = this.utils.inputToDatasetPayload(input, headers, config);
-    if (!payload.success) return { success: payload.success, errors: payload.errors };
+    let payload = input;
+
+    // Handle raw or unrefined JSON input
+    // @ts-ignore
+    if (options?.headers && options?.config) {
+      // @ts-ignore
+      payload = this.utils.inputToDatasetPayload(input, options.headers, options.config);
+      if (!payload.success) return { success: payload.success, errors: payload.errors };
+    }
 
     return await this.utils.request(
       datasetAddRequestObject(datasetApiBaseUrl, datasetId, resourcePath, payload)
@@ -75,14 +83,21 @@ export class DatasetRequests {
    * @example
    * dataset.update(input);
    */
-  public async update(options: DatasetCreateUpdateOptions) {
-    const { datasetApiBaseUrl, datasetId, id, input, headers, config } = options;
+  public async update(options: DatasetCreateUpdateOptionsRefined | DatasetCreateUpdateOptionsRaw) {
+    const { datasetApiBaseUrl, datasetId, id, input } = options;
 
-    const payload = this.utils.inputToDatasetPayload(input, headers, config);
-    if (!payload.success) return { success: payload.success, errors: payload.errors };
+    let payload = input;
+
+    // Handle raw or unrefined JSON input
+    // @ts-ignore
+    if (options?.headers && options?.config) {
+      // @ts-ignore
+      payload = this.utils.inputToDatasetPayload(input, options.headers, options.config);
+      if (!payload.success) return { success: payload.success, errors: payload.errors };
+    }
 
     return await this.utils.request(
-      datasetUpdateRequestObject(datasetApiBaseUrl, datasetId, 'item', id, input)
+      datasetUpdateRequestObject(datasetApiBaseUrl, datasetId, 'item', id, payload)
     );
   }
 }

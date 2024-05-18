@@ -168,36 +168,25 @@ export class Utils {
   }
 
   /**
-   * @description Check if an input object matches a Dataset's Headers.
+   * @description Converts an input object to a Dataset payload, according
+   * to the mapping in the configuration, and the expectations set by the
+   * Dataset Headers (schema).
    *
    * Note that it does not fail on extraneous properties, as it picks only
    * what the configuration expects (as references) and/or provides as directly assigned values.
    *
    * @example
-   * const input = [
-   *   {
-   *     headerRef: 'j2d8y22d',
-   *     value: 'Sam Person'
+   * const input = {
+   *   name: 'Sam Person',
+   *   site: {
+   *     time: '10:00',
+   *     location: 'Central'
    *   },
-   *   {
-   *     headerRef: 'kjhf298y',
-   *     value: '10:00'
-   *   },
-   *   {
-   *     headerRef: 'f2oifh9q',
-   *     value: 'Central'
-   *   },
-   *   {
-   *     headerRef: 'fb1891g2',
-   *     value: 2
-   *   },
-   *   {
-   *     headerRef: 'mbhwf8ax',
-   *     value: 46
-   *   }
-   * ];
+   *   priority: 2,
+   *   caseCode: 46
+   * };
    *
-   * const config = [
+   * const headers = [
    *   {
    *     id: 'j2d8y22d',
    *     type: 'short_text',
@@ -240,7 +229,15 @@ export class Utils {
    *   }
    * ];
    *
-   * const { success, errors } = inputToDatasetPayload(input, configs);
+   * const config = {
+   *   j2d8y22d: '{input.name}',
+   *   kjhf298y: '{input.site.time}',
+   *   f2oifh9q: '{input.site.location}',
+   *   fb1891g2: '{input.priority}',
+   *   mbhwf8ax: '{input.caseCode}'
+   * };
+   *
+   * const { success, errors } = inputToDatasetPayload(input, headers, config);
    */
   public inputToDatasetPayload(
     input: Record<string, any>,
