@@ -254,7 +254,7 @@ export class Utils {
         const header = headers.find((header) => header.id === headerRef) as Header;
         const value = this.getReferencedValue(configValue, input);
 
-        const exists = !!value && value !== '__KEY_NOT_FOUND__';
+        const exists = value !== undefined && value !== '__KEY_NOT_FOUND__';
         if (!exists && header.isRequired) errors.push(`Missing value for "${configValue}"`);
 
         const isValidType = this.validateType(header.type, value);
@@ -277,6 +277,7 @@ export class Utils {
   private validateType = (type: string, value: unknown) => {
     if (type === 'short_text' && typeof value === 'string') return true;
     if (type === 'number' && typeof value === 'number') return true;
+    if (type === 'boolean' && typeof value === 'boolean') return true;
   };
 
   /**

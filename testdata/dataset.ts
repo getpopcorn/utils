@@ -6,7 +6,7 @@ export const validDatasetInput = {
     time: '10:00',
     location: 'Central'
   },
-  priority: 2,
+  priority: false,
   caseCode: 46
 };
 
@@ -25,7 +25,7 @@ export const validDatasetPayload: Field[] = [
   },
   {
     headerRef: 'fb1891g2',
-    value: 2
+    value: false
   },
   {
     headerRef: 'mbhwf8ax',
@@ -60,7 +60,7 @@ export const validDatasetHeaders: Header[] = [
   },
   {
     id: 'fb1891g2',
-    type: 'number',
+    type: 'boolean',
     name: 'Priority',
     isRequired: true,
     position: 3,

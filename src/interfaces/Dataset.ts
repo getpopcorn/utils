@@ -44,7 +44,7 @@ export type Field = {
   value: unknown;
 };
 
-export type DatasetHeaderType = 'short_text' | 'number';
+export type DatasetHeaderType = 'short_text' | 'number' | 'boolean';
 
 export type DatasetGetResult = {
   metadata: Metadata;
