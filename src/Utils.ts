@@ -15,7 +15,11 @@ import {
   TransformSettings
 } from './interfaces/flows/Transform.js';
 import { DatasetInputValidationResult, Field, Header } from './interfaces/Dataset.js';
-import { StoredFieldRepresentation, StoredItemRepresentation } from './interfaces/DatasetStored.js';
+import {
+  StoredFieldRepresentation,
+  StoredHeaderRepresentation,
+  StoredItemRepresentation
+} from './interfaces/DatasetStored.js';
 
 /**
  * @description Utils are, as you can guess, utilities that
@@ -274,7 +278,10 @@ export class Utils {
   /**
    * @description Convert a Dataset (Items) response to a more readable JSON representation.
    */
-  public datasetDataToObject(items: StoredItemRepresentation[]) {
+  public datasetDataToObject(
+    headers: StoredHeaderRepresentation[],
+    items: StoredItemRepresentation[]
+  ) {
     const result: Record<string, any>[] = [];
 
     items.forEach((item: StoredItemRepresentation) => {
@@ -284,7 +291,8 @@ export class Utils {
 
       item.f.forEach((field: StoredFieldRepresentation) => {
         const { h, v } = field;
-        fields[h] = v;
+        const header = headers.find((header) => header.i === h);
+        if (header) fields[header.n] = v;
       });
 
       result.push(fields);
