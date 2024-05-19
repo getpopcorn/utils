@@ -8,7 +8,6 @@ import { FormatFunction, FormatOptions, FormatType } from './interfaces/flows/Fo
 import { ProcessFunction, ProcessInput } from './interfaces/flows/Process.js';
 import { RefineFilterResult } from './interfaces/flows/Refine.js';
 import { RequestInput } from './interfaces/flows/Request.js';
-
 import {
   TransformConfiguration,
   TransformOperation,
@@ -16,6 +15,7 @@ import {
   TransformSettings
 } from './interfaces/flows/Transform.js';
 import { DatasetInputValidationResult, Field, Header } from './interfaces/Dataset.js';
+import { StoredFieldRepresentation, StoredItemRepresentation } from './interfaces/DatasetStored.js';
 
 /**
  * @description Utils are, as you can guess, utilities that
@@ -272,7 +272,29 @@ export class Utils {
   }
 
   /**
-   * @description Verify that the Header type and the value match.
+   * @description Convert a Dataset (Items) response to a more readable JSON representation.
+   */
+  public datasetDataToObject(items: StoredItemRepresentation[]) {
+    const result: Record<string, any>[] = [];
+
+    items.forEach((item: StoredItemRepresentation) => {
+      const fields: Record<string, any> = {
+        __id__: item.i
+      };
+
+      item.f.forEach((field: StoredFieldRepresentation) => {
+        const { h, v } = field;
+        fields[h] = v;
+      });
+
+      result.push(fields);
+    });
+
+    return result;
+  }
+
+  /**
+   * @description Verify that the Header type and that of the value matches.
    */
   private validateType = (type: string, value: unknown) => {
     if (type === 'short_text' && typeof value === 'string') return true;
