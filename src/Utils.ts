@@ -256,6 +256,7 @@ export class Utils {
     else {
       Object.entries(config).forEach(([headerRef, configValue]) => {
         const header = headers.find((header) => header.id === headerRef) as Header;
+        if (!header) return;
         const value = this.getReferencedValue(configValue, input);
 
         const exists = value !== undefined && value !== '__KEY_NOT_FOUND__';

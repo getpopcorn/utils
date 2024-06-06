@@ -30,6 +30,29 @@ test("It should convert a JSON input to a payload compatible with a Dataset's He
   expect(payload).toMatchObject(validDatasetPayload);
 });
 
+test('It should skip non-existing Headers when converting to a Dataset payload', () => {
+  const headers = JSON.parse(JSON.stringify(validDatasetHeaders));
+  headers.pop();
+  headers.pop();
+  headers.pop();
+  headers.pop();
+
+  const { success, errors, payload } = new Utils().inputToDatasetPayload(
+    validDatasetInput,
+    headers,
+    validDatasetConfig
+  );
+
+  expect(success).toBe(true);
+  expect(errors).toMatchObject([]);
+  expect(payload).toMatchObject([
+    {
+      headerRef: 'j2d8y22d',
+      value: 'Sam Person'
+    }
+  ]);
+});
+
 test('It should convert Dataset data (Items) into a normalized JSON shape', () => {
   const expected = [
     {
