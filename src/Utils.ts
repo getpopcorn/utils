@@ -16,7 +16,6 @@ import {
 } from './interfaces/flows/Transform.js';
 import { DatasetInputValidationResult, Field, Header } from './interfaces/Dataset.js';
 import {
-  StoredFieldRepresentation,
   StoredHeaderRepresentation,
   StoredItemRepresentation
 } from './interfaces/DatasetStored.js';
@@ -283,6 +282,8 @@ export class Utils {
     headers: StoredHeaderRepresentation[],
     items: StoredItemRepresentation[]
   ) {
+    const sortedHeaders = headers.sort((a, b) => a.p - b.p);
+
     const result: Record<string, any>[] = [];
 
     items.forEach((item: StoredItemRepresentation) => {
@@ -290,10 +291,9 @@ export class Utils {
         __id__: item.i
       };
 
-      item.f.forEach((field: StoredFieldRepresentation) => {
-        const { h, v } = field;
-        const header = headers.find((header) => header.i === h);
-        if (header) fields[header.n] = v;
+      sortedHeaders.forEach((header) => {
+        const field = item.f.find((f) => f.h === header.i);
+        if (field) fields[header.n] = field.v;
       });
 
       result.push(fields);

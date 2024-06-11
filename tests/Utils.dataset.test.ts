@@ -56,28 +56,28 @@ test('It should skip non-existing Headers when converting to a Dataset payload',
 test('It should convert Dataset data (Items) into a normalized JSON shape', () => {
   const expected = [
     {
-      __id__: '01HY8CSNAW56VX19SBYKYT75NX',
       Cancelled: false,
       Name: 'Sam Person',
-      Time: '20240301'
+      Time: '20240301',
+      __id__: '01HY8CSNAW56VX19SBYKYT75NX'
     },
     {
-      __id__: '01HY8CSMX7DGKA5A8PF6E9YPNQ',
       Cancelled: false,
       Name: 'Sam Person',
-      Time: '20240301'
+      Time: '20240301',
+      __id__: '01HY8CSMX7DGKA5A8PF6E9YPNQ'
     },
     {
-      __id__: '01HY8CSMD5SWV8QPKF7H5DM7RX',
       Cancelled: false,
       Name: 'Sam Person',
-      Time: '20240301'
+      Time: '20240301',
+      __id__: '01HY8CSMD5SWV8QPKF7H5DM7RX'
     },
     {
-      __id__: '01HY8CS7870QV0AJQ67QBPEH6H',
       Cancelled: false,
       Name: 'Sam Person',
-      Time: '20240301'
+      Time: '20240301',
+      __id__: '01HY8CS7870QV0AJQ67QBPEH6H'
     }
   ];
 
