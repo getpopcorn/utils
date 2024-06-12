@@ -5,9 +5,15 @@ export type FormatOptions = {
   value: ValueType;
   currency: CurrencyOptions;
   dateStyle: DateStyle;
+  normalization: NormalizationOptions;
 };
 
 export type DateStyle = 'date' | 'iso' | 'unix' | 'utc';
+
+export type NormalizationOptions = {
+  schema: Record<string, (string | number | boolean | RegExp)[]>;
+  noMatchHandling: 'keep' | 'drop';
+};
 
 export type FormatType =
   | 'toBoolean'
@@ -17,6 +23,7 @@ export type FormatType =
   | 'toDecimal'
   | 'toInteger'
   | 'toJSON'
+  | 'toNormalized'
   | 'toPercent'
   | 'toSlug'
   | 'toSnakeCase'
@@ -25,4 +32,4 @@ export type FormatType =
 
 export type ValueType = string | number | Record<string, unknown>;
 
-export type FormatFunction = () => boolean | string | number | null;
+export type FormatFunction = () => boolean | string | number | unknown | null;

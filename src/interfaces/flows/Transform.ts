@@ -1,5 +1,5 @@
 import { CurrencyOptions } from '../index.js';
-import { DateStyle, FormatType } from './Format.js';
+import { DateStyle, FormatType, NormalizationOptions } from './Format.js';
 
 export type TransformOptions = {
   config?: TransformConfiguration;
@@ -22,6 +22,7 @@ export type TransformSettings = {
   nonExistingValueHandling: NullValueHandlingOptions;
   currency: CurrencyOptions;
   dateStyle: DateStyle;
+  normalization: NormalizationOptions;
 };
 
 type NullValueHandlingOptions = 'drop' | 'null' | 'undefined' | 'empty' | 'error';

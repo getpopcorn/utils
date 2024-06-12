@@ -11,24 +11,31 @@ export const validTransformSettings: TransformSettings = {
     locale: 'en-US',
     precision: 4
   },
-  dateStyle: 'utc'
+  dateStyle: 'utc',
+  normalization: {
+    schema: {
+      'Is employee': ['true', true, /^emp/i],
+      Contractor: ['false', false, /^cont/i]
+    },
+    noMatchHandling: 'keep'
+  }
 };
 
 export const validTransformComplexInput = {
-  email: 'sam.person@random.xyz',
-  cancelled: 0,
-  money: 765390.3,
-  date: 1711394294000,
   camelCase: 'camel case',
+  cancelled: 0,
+  date: 1711394294000,
+  email: 'sam.person@random.xyz',
+  json: '{"abc": 123}',
+  money: 765390.3,
+  normalize: 'true',
   number: '23.12839719273',
   slug: 'some article about bulldozers',
   snake_case: 'snakes in a case',
-  TitleCase: 'a grand history',
-  json: '{"abc": 123}'
+  TitleCase: 'a grand history'
 };
 
 export const validTransformComplexExpected = {
-  TitleCase: 'A Grand History',
   camelCase: 'camelCase',
   cancelled: false,
   date: '2024-03-25',
@@ -37,9 +44,11 @@ export const validTransformComplexExpected = {
   integer: 23,
   json: { abc: 123 },
   money: '765 390,3 €',
+  normalize: 'Is employee',
   percent: '23.128%',
   slug: 'some-article-about-bulldozers',
-  snake_case: 'snakes_in_a_case'
+  snake_case: 'snakes_in_a_case',
+  TitleCase: 'A Grand History'
 };
 
 export const validTransformInputMissingField: TransformOptions = {
@@ -129,6 +138,12 @@ export const complexConfig: TransformConfiguration = {
       field: 'json',
       value: 'json',
       type: 'toJSON',
+      active: true
+    },
+    {
+      field: 'normalize',
+      value: 'normalize',
+      type: 'toNormalized',
       active: true
     }
   ]

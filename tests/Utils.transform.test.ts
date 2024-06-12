@@ -153,11 +153,23 @@ test('It should not do anything with non-existing fields', () => {
 test('It should transform an object and format fields', () => {
   const expected = validTransformComplexExpected;
 
+  let settings = new Validator().getDefaults('transform');
+  settings = {
+    ...settings,
+    normalization: {
+      schema: {
+        'Is employee': ['true', true, /^emp/i],
+        Contractor: ['false', false, /^cont/i]
+      },
+      noMatchHandling: 'keep'
+    }
+  };
+
   const result = new Utils().transform(
     validTransformComplexInput,
     complexConfig,
     // @ts-ignore
-    new Validator().getDefaults('transform')
+    settings
   );
 
   expect(result).toMatchObject(expected);
@@ -166,11 +178,23 @@ test('It should transform an object and format fields', () => {
 test('It should transform an array of objects and format fields', () => {
   const expected = [validTransformComplexExpected, validTransformComplexExpected];
 
+  let settings = new Validator().getDefaults('transform');
+  settings = {
+    ...settings,
+    normalization: {
+      schema: {
+        'Is employee': ['true', true, /^emp/i],
+        Contractor: ['false', false, /^cont/i]
+      },
+      noMatchHandling: 'keep'
+    }
+  };
+
   const result = new Utils().transform(
     [validTransformComplexInput, validTransformComplexInput],
     complexConfig,
     // @ts-ignore
-    new Validator().getDefaults('transform')
+    settings
   );
 
   expect(result).toMatchObject(expected);

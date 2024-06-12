@@ -413,8 +413,8 @@ export class Utils {
   /**
    * @description Reformats a value to another type.
    */
-  public reformat(options: FormatOptions): boolean | string | number | null | void {
-    const { type, value, currency, dateStyle } = options;
+  public reformat(options: FormatOptions): boolean | string | number | unknown | null | void {
+    const { type, value, currency, dateStyle, normalization } = options;
 
     const formatFunctions: Record<FormatType, FormatFunction> = {
       toBoolean: () => this.format.toBoolean(value),
@@ -430,6 +430,12 @@ export class Utils {
       toDecimal: () => this.format.toDecimal(value as string | number),
       toInteger: () => this.format.toInteger(value as string | number),
       toJSON: () => this.format.toJSON(value as string),
+      toNormalized: () =>
+        this.format.toNormalized(
+          value as unknown,
+          normalization.schema,
+          normalization.noMatchHandling
+        ),
       toPercent: () => this.format.toPercent(value as string | number),
       toSlug: () => this.format.toSlug(value as string),
       toSnakeCase: () => this.format.toSnakeCase(value as string),
@@ -575,7 +581,8 @@ export class Utils {
         type: type as FormatType,
         value: nestedValue,
         currency: settings.currency,
-        dateStyle: settings.dateStyle
+        dateStyle: settings.dateStyle,
+        normalization: settings.normalization
       };
 
       this.createNestedValues(
