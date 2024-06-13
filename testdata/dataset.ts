@@ -105,3 +105,139 @@ export const datasetGetResponse = {
     }
   ]
 };
+
+export const datasetStoredResponse = {
+  metadata: {
+    deletedAt: '',
+    datasetName: ''
+  },
+  headers: {
+    u: 1718030448267,
+    h: [
+      {
+        i: 'OhiHdvAR',
+        t: 'short_text',
+        r: false,
+        n: 'Name',
+        p: 0,
+        l: 'fa5b60b8-af43-4b56-b0f5-a7ddf86f2ff1'
+      },
+      {
+        i: '1r_CEnPK',
+        t: 'number',
+        r: false,
+        n: 'Salary',
+        p: 1,
+        l: 'fa5b60b8-af43-4b56-b0f5-a7ddf86f2ff1'
+      },
+      {
+        i: 'jlSmJTnB',
+        t: 'boolean',
+        r: false,
+        n: 'Is Staff?',
+        p: 2,
+        l: 'fa5b60b8-af43-4b56-b0f5-a7ddf86f2ff1'
+      }
+    ]
+  },
+  items: [
+    {
+      i: '01J03MFGE78QRTAWD7ERTE83Q0',
+      f: [
+        {
+          h: 'OhiHdvAR',
+          v: 'Sam Person'
+        },
+        {
+          h: '1r_CEnPK',
+          v: 12400
+        },
+        {
+          h: 'jlSmJTnB',
+          v: true
+        }
+      ]
+    },
+    {
+      i: '01HZPHW7VSB646KE1H5V4NG6KR',
+      f: [
+        {
+          h: '1r_CEnPK',
+          v: 666
+        },
+        {
+          h: 'OhiHdvAR',
+          v: 'Conny'
+        },
+        {
+          h: 'jlSmJTnB',
+          v: false
+        }
+      ]
+    },
+    {
+      i: '01HZP15SEHC4239670TGAGH46N',
+      f: [
+        {
+          h: 'OhiHdvAR',
+          v: 'Sonny'
+        },
+        {
+          h: 'jlSmJTnB',
+          v: false
+        },
+        {
+          h: '1r_CEnPK',
+          v: 12331
+        }
+      ]
+    },
+    {
+      i: '01HZP15G623226RW08Q5EWHFVC',
+      f: [
+        {
+          h: 'OhiHdvAR',
+          v: 'Johnny'
+        },
+        {
+          h: '1r_CEnPK',
+          v: '123'
+        }
+      ]
+    },
+    {
+      i: '01HZP1579SXAG17FBDVETG2NJA',
+      f: [
+        {
+          h: 'OhiHdvAR',
+          v: 'Mikael'
+        },
+        {
+          h: '1r_CEnPK',
+          v: '321'
+        },
+        {
+          h: 'jlSmJTnB',
+          v: true
+        }
+      ]
+    },
+    {
+      i: '01HZP150YT35Y4D6N9V4C4296H',
+      f: [
+        {
+          h: 'OhiHdvAR',
+          v: 'Anton'
+        },
+        {
+          h: '1r_CEnPK',
+          v: '213123'
+        },
+        {
+          h: 'jlSmJTnB',
+          v: true
+        }
+      ]
+    }
+  ]
+};

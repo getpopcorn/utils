@@ -303,6 +303,20 @@ export class Utils {
   }
 
   /**
+   * @description Checks if an object has the same shape as a Dataset response.
+   */
+  public isDatasetResponse(input: Record<string, any>) {
+    return !!(
+      input.metadata &&
+      input.metadata?.hasOwnProperty('datasetName') &&
+      typeof input.metadata === 'object' &&
+      input.headers &&
+      typeof input.headers === 'object' &&
+      Array.isArray(input.items)
+    );
+  }
+
+  /**
    * @description Verify that the Header type and that of the value matches.
    */
   private validateType = (type: string, value: unknown) => {

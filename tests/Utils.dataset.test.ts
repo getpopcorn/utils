@@ -8,7 +8,8 @@ import {
   validDatasetInput,
   validDatasetHeaders,
   validDatasetConfig,
-  validDatasetPayload
+  validDatasetPayload,
+  datasetStoredResponse
 } from '../testdata/dataset.js';
 import {
   StoredHeaderRepresentation,
@@ -89,6 +90,14 @@ test('It should convert Dataset data (Items) into a normalized JSON shape', () =
   expect(result).toMatchObject(expected);
 });
 
+test('It should validate the input as a Dataset response', async () => {
+  const expected = true;
+
+  const result = new Utils().isDatasetResponse(datasetStoredResponse);
+
+  expect(result).toBe(expected);
+});
+
 /**
  * NEGATIVE TESTS
  */
@@ -108,4 +117,37 @@ test('It should return errors when missing required Headers', () => {
     'Missing value for "{input.priority}"'
   ]);
   expect(payload).toMatchObject([]);
+});
+
+test('It should invalidate the input if no metadata', async () => {
+  const expected = false;
+
+  const input = JSON.parse(JSON.stringify(datasetStoredResponse));
+  input.metadata = null;
+
+  const result = new Utils().isDatasetResponse(input);
+
+  expect(result).toBe(expected);
+});
+
+test('It should invalidate the input if no headers', async () => {
+  const expected = false;
+
+  const input = JSON.parse(JSON.stringify(datasetStoredResponse));
+  input.headers = null;
+
+  const result = new Utils().isDatasetResponse(input);
+
+  expect(result).toBe(expected);
+});
+
+test('It should invalidate the input if no items', async () => {
+  const expected = false;
+
+  const input = JSON.parse(JSON.stringify(datasetStoredResponse));
+  input.metadata = null;
+
+  const result = new Utils().isDatasetResponse(input);
+
+  expect(result).toBe(expected);
 });
