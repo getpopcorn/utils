@@ -561,8 +561,9 @@ export class Utils {
     const results: TransformResult = [];
 
     if (Array.isArray(input)) {
-      for (let iterations = 0; iterations < input.length; iterations++)
+      for (let iterations = 0; iterations < input.length; iterations++) {
         results.push(this.transformed(input[iterations], config, settings));
+      }
 
       return results;
     }
@@ -591,12 +592,14 @@ export class Utils {
       const nestedValue = this.getNestedValue(value, input);
       if (nestedValue === '__KEY_NOT_FOUND__') return;
 
+      const normalization = operation.normalization || settings.normalization;
+
       const formatOptions = {
         type: type as FormatType,
         value: nestedValue,
         currency: settings.currency,
         dateStyle: settings.dateStyle,
-        normalization: settings.normalization
+        normalization
       };
 
       this.createNestedValues(

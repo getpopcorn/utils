@@ -247,3 +247,71 @@ test('It should transform an object while normalizing the resulting value', () =
 
   expect(result).toMatchObject(expected);
 });
+
+test('It should use global and local normalization settings', () => {
+  const expected = {
+    email: 'sam.person@random.xyz',
+    isEmployee: 'No',
+    status: 'Unavailable'
+  };
+
+  const input = {
+    contact_email: 'sam.person@random.xyz',
+    employee: false,
+    status: 650
+  };
+
+  const config: TransformConfiguration = {
+    active: true,
+    fields: [
+      {
+        field: 'email',
+        value: 'contact_email',
+        type: 'toString',
+        active: true
+      },
+      {
+        field: 'isEmployee',
+        value: 'employee',
+        type: 'toNormalized',
+        active: true
+      },
+      {
+        field: 'status',
+        value: 'status',
+        type: 'toNormalized',
+        active: true,
+        // Local normalization
+        normalization: {
+          schema: {
+            // Matches 100-199
+            Available: [/^1\d{2}(\.\d+)?$/],
+            // Matches any other number
+            Unavailable: [/^(?!(1\d{2}(\.\d+)?$))[+-]?(\d+(\.\d*)?|\.\d+)$/]
+          },
+          noMatchHandling: 'keep'
+        }
+      }
+    ]
+  };
+
+  const result = new Utils().transform(input, config, {
+    nonExistingValueHandling: 'drop',
+    currency: {
+      symbol: 'USD',
+      locale: 'en-US',
+      precision: 4
+    },
+    dateStyle: 'utc',
+    // Global normalization
+    normalization: {
+      schema: {
+        Yes: [true, 'true'],
+        No: [false, 'false']
+      },
+      noMatchHandling: 'keep'
+    }
+  });
+
+  expect(result).toMatchObject(expected);
+});

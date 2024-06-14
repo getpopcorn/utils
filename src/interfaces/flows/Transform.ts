@@ -16,6 +16,7 @@ export type TransformOperation = {
   value: string;
   type: FormatType | 'keep' | 'drop';
   active: boolean;
+  normalization?: NormalizationOptions;
 };
 
 export type TransformSettings = {
