@@ -199,3 +199,51 @@ test('It should transform an array of objects and format fields', () => {
 
   expect(result).toMatchObject(expected);
 });
+
+test('It should transform an object while normalizing the resulting value', () => {
+  const expected = {
+    email: 'sam.person@random.xyz',
+    hasCancelled: 'No'
+  };
+
+  const input = {
+    contact_email: 'sam.person@random.xyz',
+    cancelled: false
+  };
+
+  const config: TransformConfiguration = {
+    active: true,
+    fields: [
+      {
+        field: 'hasCancelled',
+        value: 'cancelled',
+        type: 'toNormalized',
+        active: true
+      },
+      {
+        field: 'email',
+        value: 'contact_email',
+        type: 'toString',
+        active: true
+      }
+    ]
+  };
+
+  const result = new Utils().transform(input, config, {
+    nonExistingValueHandling: 'drop',
+    currency: {
+      symbol: 'USD',
+      locale: 'en-US',
+      precision: 4
+    },
+    dateStyle: 'utc',
+    normalization: {
+      schema: {
+        No: [false]
+      },
+      noMatchHandling: 'keep'
+    }
+  });
+
+  expect(result).toMatchObject(expected);
+});
