@@ -1,4 +1,4 @@
-export const headers = [
+export const headersStored = [
   {
     i: 'name123',
     t: 'short_text',
@@ -33,7 +33,42 @@ export const headers = [
   }
 ];
 
-export const items = [
+export const headers = [
+  {
+    id: 'name123',
+    type: 'short_text',
+    isRequired: true,
+    name: 'Name',
+    position: 0,
+    lastChangedBy: 'user123'
+  },
+  {
+    id: 'time123',
+    type: 'short_text',
+    isRequired: true,
+    name: 'Time',
+    position: 1,
+    lastChangedBy: 'user123'
+  },
+  {
+    id: 'cancelled123',
+    type: 'short_text',
+    isRequired: true,
+    name: 'Cancelled',
+    position: 2,
+    lastChangedBy: 'user123'
+  },
+  {
+    id: '01HY82SH3VP76YA61HMNACG3JB',
+    type: 'short_text',
+    isRequired: false,
+    name: 'Header',
+    position: 3,
+    lastChangedBy: ''
+  }
+];
+
+export const itemsStored = [
   {
     i: '01HY8CSNAW56VX19SBYKYT75NX',
     f: [
@@ -99,6 +134,77 @@ export const items = [
       {
         h: 'cancelled123',
         v: false
+      }
+    ]
+  }
+];
+
+export const items = [
+  {
+    id: '01HY8CSNAW56VX19SBYKYT75NX',
+    fields: [
+      {
+        headerRef: 'name123',
+        value: 'Sam Person'
+      },
+      {
+        headerRef: 'time123',
+        value: '20240301'
+      },
+      {
+        headerRef: 'cancelled123',
+        value: false
+      }
+    ]
+  },
+  {
+    id: '01HY8CSMX7DGKA5A8PF6E9YPNQ',
+    fields: [
+      {
+        headerRef: 'name123',
+        value: 'Sam Person'
+      },
+      {
+        headerRef: 'time123',
+        value: '20240301'
+      },
+      {
+        headerRef: 'cancelled123',
+        value: false
+      }
+    ]
+  },
+  {
+    id: '01HY8CSMD5SWV8QPKF7H5DM7RX',
+    fields: [
+      {
+        headerRef: 'name123',
+        value: 'Sam Person'
+      },
+      {
+        headerRef: 'time123',
+        value: '20240301'
+      },
+      {
+        headerRef: 'cancelled123',
+        value: false
+      }
+    ]
+  },
+  {
+    id: '01HY8CS7870QV0AJQ67QBPEH6H',
+    fields: [
+      {
+        headerRef: 'name123',
+        value: 'Sam Person'
+      },
+      {
+        headerRef: 'time123',
+        value: '20240301'
+      },
+      {
+        headerRef: 'cancelled123',
+        value: false
       }
     ]
   }

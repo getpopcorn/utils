@@ -25,15 +25,15 @@ export type Header = {
   lastChangedBy: string;
 };
 
-export type MeilisearchItem = {
-  id: string;
-  [key: string]: string | number;
-};
-
 export type Item = {
   id: string;
   fields: Field[];
   createdAt: string;
+};
+
+export type MeilisearchItem = {
+  id: string;
+  [key: string]: string | number;
 };
 
 export type Field = {

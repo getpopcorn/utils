@@ -14,7 +14,7 @@ import {
   TransformResult,
   TransformSettings
 } from './interfaces/flows/Transform.js';
-import { DatasetInputValidationResult, Field, Header } from './interfaces/Dataset.js';
+import { DatasetInputValidationResult, Field, Header, Item } from './interfaces/Dataset.js';
 import {
   StoredHeaderRepresentation,
   StoredItemRepresentation
@@ -279,21 +279,44 @@ export class Utils {
    * @description Convert a Dataset (Items) response to a more readable JSON representation.
    */
   public datasetDataToObject(
-    headers: StoredHeaderRepresentation[],
-    items: StoredItemRepresentation[]
+    headers: Header[] | StoredHeaderRepresentation[],
+    items: Item[] | StoredItemRepresentation[]
   ) {
-    const sortedHeaders = headers.sort((a, b) => a.p - b.p);
+    const isStoredHeader = (header: any): header is StoredHeaderRepresentation => {
+      return 'i' in header;
+    };
+
+    const isStoredItem = (item: any): item is StoredItemRepresentation => {
+      return 'i' in item;
+    };
+
+    const sortedHeaders = headers.sort((a, b) => {
+      const positionA = isStoredHeader(a) ? a.p : a.position;
+      const positionB = isStoredHeader(b) ? b.p : b.position;
+      return positionA - positionB;
+    });
 
     const result: Record<string, any>[] = [];
 
-    items.forEach((item: StoredItemRepresentation) => {
+    items.forEach((item) => {
+      const _isStoredItem = isStoredItem(item);
+
       const fields: Record<string, any> = {
-        __id__: item.i
+        __id__: _isStoredItem ? item.i : item.id
       };
 
       sortedHeaders.forEach((header) => {
-        const field = item.f.find((f) => f.h === header.i);
-        if (field) fields[header.n] = field.v;
+        const _isStoredHeader = isStoredHeader(header);
+
+        const headerId = _isStoredHeader ? header.i : header.id;
+        const headerName: any = _isStoredHeader ? header.n : header.name;
+        const _fields = _isStoredItem ? item.f : item.fields;
+        const field = _fields.find((f: any) =>
+          _isStoredItem ? f.h === headerId : f.headerRef === headerId
+        );
+
+        // @ts-ignore
+        if (field) fields[headerName] = _isStoredItem ? field.v : field.value;
       });
 
       result.push(fields);

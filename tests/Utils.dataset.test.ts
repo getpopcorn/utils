@@ -2,7 +2,7 @@ import { test, expect } from 'vitest';
 
 import { Utils } from '../src/index.js';
 
-import { items, headers } from '../testdata/datasetDataToObject.js';
+import { items, itemsStored, headers, headersStored } from '../testdata/datasetDataToObject.js';
 
 import {
   validDatasetInput,
@@ -15,6 +15,7 @@ import {
   StoredHeaderRepresentation,
   StoredItemRepresentation
 } from '../src/interfaces/DatasetStored.js';
+import { Header, Item } from '../src/interfaces/Dataset.js';
 
 /**
  * POSITIVE TESTS
@@ -54,7 +55,7 @@ test('It should skip non-existing Headers when converting to a Dataset payload',
   ]);
 });
 
-test('It should convert Dataset data (Items) into a normalized JSON shape', () => {
+test('It should convert stored Dataset data (Items) into a normalized JSON shape', () => {
   const expected = [
     {
       Cancelled: false,
@@ -83,9 +84,42 @@ test('It should convert Dataset data (Items) into a normalized JSON shape', () =
   ];
 
   const result = new Utils().datasetDataToObject(
-    headers as StoredHeaderRepresentation[],
-    items as StoredItemRepresentation[]
+    headersStored as StoredHeaderRepresentation[],
+    itemsStored as StoredItemRepresentation[]
   );
+
+  expect(result).toMatchObject(expected);
+});
+
+test('It should convert unwrapped/full Dataset data (Items) into a normalized JSON shape', () => {
+  const expected = [
+    {
+      Cancelled: false,
+      Name: 'Sam Person',
+      Time: '20240301',
+      __id__: '01HY8CSNAW56VX19SBYKYT75NX'
+    },
+    {
+      Cancelled: false,
+      Name: 'Sam Person',
+      Time: '20240301',
+      __id__: '01HY8CSMX7DGKA5A8PF6E9YPNQ'
+    },
+    {
+      Cancelled: false,
+      Name: 'Sam Person',
+      Time: '20240301',
+      __id__: '01HY8CSMD5SWV8QPKF7H5DM7RX'
+    },
+    {
+      Cancelled: false,
+      Name: 'Sam Person',
+      Time: '20240301',
+      __id__: '01HY8CS7870QV0AJQ67QBPEH6H'
+    }
+  ];
+
+  const result = new Utils().datasetDataToObject(headers as Header[], items as Item[]);
 
   expect(result).toMatchObject(expected);
 });
