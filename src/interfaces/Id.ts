@@ -1,1 +1,1 @@
-export type IdType = 'short' | 'long' | 'ulid';
+export type IdType = 'safe' | 'short' | 'long' | 'ulid';

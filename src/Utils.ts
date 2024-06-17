@@ -282,11 +282,15 @@ export class Utils {
     headers: Header[] | StoredHeaderRepresentation[],
     items: Item[] | StoredItemRepresentation[]
   ) {
-    const isStoredHeader = (header: any): header is StoredHeaderRepresentation => {
+    const isStoredHeader = (
+      header: Header | StoredHeaderRepresentation
+    ): header is StoredHeaderRepresentation => {
       return 'i' in header;
     };
 
-    const isStoredItem = (item: any): item is StoredItemRepresentation => {
+    const isStoredItem = (
+      item: Item | StoredItemRepresentation
+    ): item is StoredItemRepresentation => {
       return 'i' in item;
     };
 

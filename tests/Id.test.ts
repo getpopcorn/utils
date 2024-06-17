@@ -4,6 +4,15 @@ import { Id } from '../src/Id.js';
 
 const id = new Id();
 
+test('It should get a "safe" alpha-numeric ID', () => {
+  const result = id.create('safe');
+
+  const isAlphaNumeric = /^[a-z0-9]+$/i.test(result);
+
+  expect(isAlphaNumeric).toBe(true);
+  expect(result.length).toBe(12);
+});
+
 test('It should get a short ID', () => {
   const result = id.create('short');
 

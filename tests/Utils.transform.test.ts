@@ -201,15 +201,19 @@ test('It should transform an array of objects and format fields', () => {
 });
 
 test('It should transform an object while normalizing the resulting value', () => {
-  const expected = {
-    email: 'sam.person@random.xyz',
-    hasCancelled: 'No'
-  };
+  const expected = [
+    {
+      email: 'sam.person@random.xyz',
+      hasCancelled: 'No'
+    }
+  ];
 
-  const input = {
-    contact_email: 'sam.person@random.xyz',
-    cancelled: false
-  };
+  const input = [
+    {
+      contact_email: 'sam.person@random.xyz',
+      cancelled: false
+    }
+  ];
 
   const config: TransformConfiguration = {
     active: true,
