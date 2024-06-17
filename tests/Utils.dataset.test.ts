@@ -91,7 +91,7 @@ test('It should convert stored Dataset data (Items) into a normalized JSON shape
   expect(result).toMatchObject(expected);
 });
 
-test.only('It should convert unwrapped/full Dataset data (Items) into a normalized JSON shape', () => {
+test('It should convert unwrapped/full Dataset data (Items) into a normalized JSON shape', () => {
   const expected = [
     {
       Cancelled: false,
