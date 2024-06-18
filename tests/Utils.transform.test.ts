@@ -204,14 +204,16 @@ test('It should transform an object while normalizing the resulting value', () =
   const expected = [
     {
       email: 'sam.person@random.xyz',
-      hasCancelled: 'No'
+      hasCancelled: 'No',
+      something_else: 'REPLACED'
     }
   ];
 
   const input = [
     {
       contact_email: 'sam.person@random.xyz',
-      cancelled: false
+      cancelled: false,
+      something_else: 'abc'
     }
   ];
 
@@ -229,6 +231,12 @@ test('It should transform an object while normalizing the resulting value', () =
         value: 'contact_email',
         type: 'toString',
         active: true
+      },
+      {
+        field: 'something_else',
+        value: 'something_else',
+        type: 'toNormalized',
+        active: true
       }
     ]
   };
@@ -245,7 +253,8 @@ test('It should transform an object while normalizing the resulting value', () =
       schema: {
         No: [false]
       },
-      noMatchHandling: 'keep'
+      noMatchHandling: 'keep',
+      replacementValue: 'REPLACED'
     }
   });
 

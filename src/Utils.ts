@@ -475,7 +475,8 @@ export class Utils {
         this.format.toNormalized(
           value as unknown,
           normalization.schema,
-          normalization.noMatchHandling
+          normalization.noMatchHandling,
+          normalization.replacementValue
         ),
       toPercent: () => this.format.toPercent(value as string | number),
       toSlug: () => this.format.toSlug(value as string),

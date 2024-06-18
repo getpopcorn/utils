@@ -13,6 +13,7 @@ export type DateStyle = 'date' | 'iso' | 'unix' | 'utc';
 export type NormalizationOptions = {
   schema: Record<string, (string | number | boolean | RegExp)[]>;
   noMatchHandling: 'keep' | 'drop';
+  replacementValue?: string | number | boolean;
 };
 
 export type FormatType =
