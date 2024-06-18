@@ -23,7 +23,7 @@ importers:
     devDependencies:
       '@getpopcorn/validator':
         specifier: latest
-        version: 0.0.62
+        version: 0.0.63
       '@types/node':
         specifier: '20'
         version: 20.14.5
@@ -250,8 +250,8 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@getpopcorn/validator@0.0.62':
-    resolution: {integrity: sha512-FnN1POCUnoxXE7rD/nfPDWExjanlhs0krxT04eFSBzoq2dg36MuaufuDO4IGHFeUZfjYLo3g0Snub8GAuJHGKA==, tarball: https://npm.pkg.github.com/download/@getpopcorn/validator/0.0.62/7ab22a66647ce2e64101c59c1aad6dfccf67c7c8}
+  '@getpopcorn/validator@0.0.63':
+    resolution: {integrity: sha512-SCMZuSZW9tvtgeAaZ2kaFqzzFbuMFEv+nimf2J0gx1EgQ9bGA0Dt/9mw7d3lPiPqwYRfakpbtYFMPvpWML3XkA==, tarball: https://npm.pkg.github.com/download/@getpopcorn/validator/0.0.63/8b342254ab10ff222f624d4d233b11c45929ad89}
 
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -1652,7 +1652,7 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
-  '@getpopcorn/validator@0.0.62':
+  '@getpopcorn/validator@0.0.63':
     dependencies:
       mikrovalid: 1.0.20
 
