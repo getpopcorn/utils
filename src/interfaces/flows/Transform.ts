@@ -20,6 +20,7 @@ export type TransformOperation = {
 };
 
 export type TransformSettings = {
+  name: string;
   nonExistingValueHandling: NullValueHandlingOptions;
   currency: CurrencyOptions;
   dateStyle: DateStyle;

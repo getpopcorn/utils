@@ -1,5 +1,9 @@
 import { Condition } from '../index.js';
 
+export type RefineSettings = {
+  name: string;
+};
+
 export type RefineOptions = {
   config?: RefineConfiguration;
 };

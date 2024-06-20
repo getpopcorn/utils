@@ -1,4 +1,5 @@
 export type ProcessSettings = {
+  name: string;
   repeats: boolean;
   count?: number | null;
 };

@@ -1,5 +1,4 @@
 export type FlowComponentRepresentation = {
-  name: string;
   id: string;
   type: FlowComponentType;
   settings: FlowComponentSettings;

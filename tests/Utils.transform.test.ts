@@ -242,6 +242,7 @@ test('It should transform an object while normalizing the resulting value', () =
   };
 
   const result = new Utils().transform(input, config, {
+    name: 'Transform',
     nonExistingValueHandling: 'drop',
     currency: {
       symbol: 'USD',
@@ -309,6 +310,7 @@ test('It should use global and local normalization settings', () => {
   };
 
   const result = new Utils().transform(input, config, {
+    name: 'Transform',
     nonExistingValueHandling: 'drop',
     currency: {
       symbol: 'USD',

@@ -5,6 +5,7 @@ import {
 } from '../src/interfaces/flows/Transform.js';
 
 export const validTransformSettings: TransformSettings = {
+  name: 'Transform',
   nonExistingValueHandling: 'drop',
   currency: {
     symbol: 'USD',
