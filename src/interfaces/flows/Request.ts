@@ -3,7 +3,7 @@ import { HttpMethod } from '../index.js';
 export type RequestInput = {
   endpoint: string;
   method: HttpMethod;
-  message?: Record<string, any> | string;
+  message?: Record<string, any> | string | undefined | null;
   headers?: Record<string, any>;
 };
 
