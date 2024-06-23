@@ -536,27 +536,27 @@ export class Utils {
 
   /**
    * @description Determines if input matches a set of ConditionalConfigurations.
-   * The result is mapped to either the name of the ConditionalConfiguration,
-   * or if to match any of them, to the `default` object in the result.
+   * The result is an object containing the `next` ID to use and the (last) matching input.
    */
-  public getConditionals(inputs: Record<string, any>[], config: ConditionalConfiguration[]) {
-    const results: ConditionalResult = { default: [] };
-
-    const assignResult = (matchIndex: number, inputIndex: number) => {
-      if (matchIndex >= 0) {
-        const name = config[matchIndex].name;
-        if (!results[name]) results[name] = [];
-        results[name].push(inputs[inputIndex]);
-      } else results['default'].push(inputs[inputIndex]);
+  public getConditionals(
+    inputs: Record<string, any>[],
+    config: ConditionalConfiguration[]
+  ): ConditionalResult {
+    const result = {
+      next: '',
+      input: {}
     };
 
-    inputs.forEach((input: Record<string, any>, index: number) => {
+    inputs.forEach((input) => {
       const matches = this.conditionalMatches(config, input);
-      const matchIndex = matches.findIndex((result: boolean) => result === true);
-      assignResult(matchIndex, index);
+      const matchIndex = matches.findIndex((result) => result === true);
+      if (matchIndex >= 0) {
+        result.next = config[matchIndex].next;
+        result.input = input;
+      }
     });
 
-    return results;
+    return result;
   }
 
   /**

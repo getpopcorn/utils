@@ -12,7 +12,8 @@ export const validConditionalConfig: ConditionalConfiguration[] = [
         expected: 'true',
         active: true
       }
-    ]
+    ],
+    next: 'abcd1234'
   }
 ];
 
@@ -34,7 +35,8 @@ export const validConditionalComplexConfig: ConditionalConfiguration[] = [
         expected: 'true',
         active: true
       }
-    ]
+    ],
+    next: 'transform1'
   },
   {
     name: 'Guests without allergies who love games',
@@ -53,7 +55,8 @@ export const validConditionalComplexConfig: ConditionalConfiguration[] = [
         expected: 'true',
         active: true
       }
-    ]
+    ],
+    next: 'transform2'
   }
 ];
 
@@ -76,25 +79,10 @@ export const validConditionalComplexInput = [
 ];
 
 export const validConditionalComplexExpected = {
-  'Guests with allergies who love games': [
-    {
-      allergies: true,
-      email: 'sam.person@random.xyz',
-      randomFacts: { lovesGames: true }
-    }
-  ],
-  'Guests without allergies who love games': [
-    {
-      allergies: false,
-      email: 'dat.person@random.xyz',
-      randomFacts: { lovesGames: true }
-    }
-  ],
-  default: [
-    {
-      allergies: false,
-      email: 'hoo.person@random.xyz',
-      randomFacts: { lovesGames: false }
-    }
-  ]
+  next: 'transform2',
+  input: {
+    email: 'dat.person@random.xyz',
+    allergies: false,
+    randomFacts: { lovesGames: true }
+  }
 };

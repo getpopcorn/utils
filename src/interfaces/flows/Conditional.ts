@@ -1,8 +1,8 @@
 import { Condition } from '../index.js';
 
 export type ConditionalResult = {
-  [key: string]: Record<string, any>[];
-  default: Record<string, any>[];
+  next: string;
+  input: Record<string, any> | Record<string, any>[];
 };
 
 export type ConditionalConfiguration = {
@@ -10,4 +10,5 @@ export type ConditionalConfiguration = {
   name: string;
   type: string;
   active: boolean;
+  next: string;
 };

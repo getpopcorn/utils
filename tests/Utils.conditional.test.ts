@@ -14,20 +14,50 @@ import {
 /**
  * POSITIVE TESTS
  */
+test('It should determine a positive condition with a single item', () => {
+  const expected = {
+    next: 'abcd1234',
+    input: { email: 'sam.person@random.xyz', allergies: true }
+  };
+
+  const input = [
+    {
+      email: 'sam.person@random.xyz',
+      allergies: true
+    }
+  ];
+
+  const result = new Utils().getConditionals(input, validConditionalConfig);
+
+  expect(result).toMatchObject(expected);
+});
+
+test('It should determine a positive condition with multiple items, using only the last match', () => {
+  const expected = {
+    next: 'abcd1234',
+    input: { email: 'dat.person@random.xyz', allergies: true }
+  };
+
+  const input = [
+    {
+      email: 'sam.person@random.xyz',
+      allergies: true
+    },
+    {
+      email: 'dat.person@random.xyz',
+      allergies: true
+    }
+  ];
+
+  const result = new Utils().getConditionals(input, validConditionalConfig);
+
+  expect(result).toMatchObject(expected);
+});
+
 test('It should determine a positive condition', () => {
   const expected = {
-    'Guests with allergies': [
-      {
-        email: 'sam.person@random.xyz',
-        allergies: true
-      }
-    ],
-    default: [
-      {
-        email: 'dat.person@random.xyz',
-        allergies: false
-      }
-    ]
+    next: 'abcd1234',
+    input: { email: 'sam.person@random.xyz', allergies: true }
   };
 
   const input = [
@@ -48,18 +78,8 @@ test('It should determine a positive condition', () => {
 
 test('It should determine a negative condition', () => {
   const expected = {
-    'Guests with no allergies': [
-      {
-        email: 'dat.person@random.xyz',
-        allergies: false
-      }
-    ],
-    default: [
-      {
-        email: 'sam.person@random.xyz',
-        allergies: true
-      }
-    ]
+    next: '',
+    input: { email: 'dat.person@random.xyz', allergies: false }
   };
 
   const input = [
@@ -85,7 +105,8 @@ test('It should determine a negative condition', () => {
           expected: 'false',
           active: true
         }
-      ]
+      ],
+      next: ''
     }
   ];
 
@@ -96,19 +117,12 @@ test('It should determine a negative condition', () => {
 
 test('It should determine multiple conditions', () => {
   const expected = {
-    'Guests with no allergies and who love games': [
-      {
-        email: 'dat.person@random.xyz',
-        allergies: false,
-        randomFacts: { lovesGames: true }
-      }
-    ],
-    default: [
-      {
-        email: 'sam.person@random.xyz',
-        allergies: true
-      }
-    ]
+    next: '',
+    input: {
+      email: 'dat.person@random.xyz',
+      allergies: false,
+      randomFacts: { lovesGames: true }
+    }
   };
 
   const input = [
@@ -141,7 +155,8 @@ test('It should determine multiple conditions', () => {
           expected: 'true',
           active: true
         }
-      ]
+      ],
+      next: ''
     }
   ];
 
