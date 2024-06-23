@@ -47,7 +47,16 @@ export class Utils {
         component: FlowComponentRepresentation
       ) => {
         const fn = functions[component.type];
-        if (fn) return await fn(component, await result);
+        if (fn) {
+          const resolvedResult = await result;
+          const nextId =
+            // @ts-ignore
+            resolvedResult?.next !== component.id ? resolvedResult?.next : component.next;
+          component.next = nextId;
+          // @ts-ignore
+          const input = resolvedResult?.input || resolvedResult;
+          return await fn(component, input);
+        }
       },
       components
     );
