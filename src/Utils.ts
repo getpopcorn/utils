@@ -509,7 +509,7 @@ export class Utils {
 
   /**
    * @description Run the functions from the Process queue.
-   * The resulting value is not passed between iterations.
+   * The resulting value is not passed between repeated iterations.
    */
   public async runProcess(input: ProcessInput) {
     const { startInput, queue, repeats, count } = input;
@@ -529,18 +529,21 @@ export class Utils {
    * the result to one final value which is returned.
    */
   private async processQueue(queue: ProcessFunction[], startInput: unknown) {
-    return await queue.reduce(
-      async (
-        result: Promise<Record<string, any>>,
-        processComponent: Record<string, any>,
-        index: number
-      ) => {
-        const input = index === 0 ? startInput : await result;
-        const componentConfig = processComponent.input;
-        return await processComponent.fn(componentConfig, input);
-      },
-      Promise.resolve({})
-    );
+    let lastSuccessfulResult = startInput;
+
+    for (const [index, processComponent] of queue.entries()) {
+      const input = index === 0 ? startInput : lastSuccessfulResult;
+      const componentConfig = processComponent.input;
+
+      try {
+        const newResult = await processComponent.fn(componentConfig, input);
+        lastSuccessfulResult = newResult;
+      } catch (error) {
+        break;
+      }
+    }
+
+    return lastSuccessfulResult;
   }
 
   /**
