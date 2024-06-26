@@ -8,5 +8,5 @@ export type RequestInput = {
 };
 
 export type RequestMakeInput = {
-  message?: Record<string, any> | string;
+  message?: Record<string, any> | string | Buffer;
 };

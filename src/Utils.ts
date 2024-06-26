@@ -670,9 +670,15 @@ export class Utils {
     const { message, endpoint, method } = input;
 
     const headers = input.headers || {};
-    const body = message
-      ? ((this.isJson(message as string) ? message : JSON.stringify(message)) as string)
-      : null;
+    const body: any = (() => {
+      if (Buffer.isBuffer(message)) return message;
+      if (message) {
+        if (this.isJson(message as string)) return message;
+        if (typeof message === 'string') return JSON.stringify(message) as string;
+        return null;
+      }
+      return null;
+    })();
 
     return await fetch(endpoint, {
       headers,
