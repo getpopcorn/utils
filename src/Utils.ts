@@ -707,4 +707,14 @@ export class Utils {
     }
     return true;
   };
+
+  /**
+   * @description Calculate exponential backoff delay.
+   */
+  public async exponentialDelay(retryCount: number, delayInMs = 1000) {
+    const baseDelay = delayInMs * Math.pow(2, retryCount);
+    const jitter = Math.floor(Math.random() * (baseDelay / 10));
+    const delay = baseDelay + jitter;
+    return await new Promise((resolve) => setTimeout(resolve, delay));
+  }
 }
