@@ -1,4 +1,5 @@
 import { test, expect } from 'vitest';
+
 import { Utils } from '../src/Utils.js';
 
 const utils = new Utils();

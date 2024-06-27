@@ -671,7 +671,7 @@ export class Utils {
 
     const headers = input.headers || {};
     const body: any = (() => {
-      if (Buffer.isBuffer(message)) return message;
+      if (message instanceof ArrayBuffer || message instanceof Uint8Array) return message;
       if (message) {
         if (this.isJson(message as string)) return message;
         if (typeof message === 'string') return JSON.stringify(message) as string;
