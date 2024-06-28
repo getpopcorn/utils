@@ -20,6 +20,9 @@ import {
   StoredItemRepresentation
 } from './interfaces/DatasetStored.js';
 
+import { isJson } from './infrastructure/isJson.js';
+import { getRequestBody } from './infrastructure/getRequestBody.js';
+
 /**
  * @description Utils are, as you can guess, utilities that
  * are generic and shared in nature.
@@ -670,20 +673,7 @@ export class Utils {
     const { message, endpoint, method } = input;
 
     const headers = input.headers || {};
-    const body = message
-      ? ((this.isJson(message as string) ? message : JSON.stringify(message)) as string)
-      : null;
-    /*
-    const body: any = (() => {
-      //if (message instanceof ArrayBuffer || message instanceof Uint8Array) return message;
-      if (message) {
-        if (this.isJson(message as string)) return message;
-        if (typeof message === 'string') return JSON.stringify(message) as string;
-        return null;
-      }
-      return null;
-    })();
-    */
+    const body = getRequestBody(message);
 
     return await fetch(endpoint, {
       headers,
@@ -698,20 +688,8 @@ export class Utils {
           return { popcorn_error: errorMessage };
         }
       })
-      .then((response: any) => (this.isJson(response) ? JSON.parse(response) : response));
+      .then((response: any) => (isJson(response) ? JSON.parse(response) : response));
   }
-
-  /**
-   * @description Check if a string input can be unwrapped as a JSON object.
-   */
-  private isJson = (str: string): Record<string, unknown> | boolean => {
-    try {
-      JSON.parse(str);
-    } catch (e) {
-      return false;
-    }
-    return true;
-  };
 
   /**
    * @description Calculate exponential backoff delay.

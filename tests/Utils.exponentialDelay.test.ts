@@ -7,7 +7,7 @@ const utils = new Utils();
 test('It should run an exponentially delayed loop', async () => {
   const results = [];
 
-  const baseDelay = 20;
+  const baseDelay = 40;
 
   for (let index = 1; index <= 5; index++) {
     const timeStart = Date.now();

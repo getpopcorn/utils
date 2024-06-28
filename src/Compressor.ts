@@ -28,7 +28,7 @@ export class Compressor {
   /**
    * @description Decompress a string with gzip.
    */
-  public decompress(input: Buffer) {
+  public decompress(input: Buffer | ArrayBuffer | Uint8Array) {
     const decompressed = gunzipSync(input).toString('utf8');
 
     if (!this.isSilent)
@@ -42,7 +42,7 @@ export class Compressor {
   /**
    * @description Get the byte size of a string.
    */
-  private size(input: string | Buffer) {
+  private size(input: string | Buffer | ArrayBuffer | Uint8Array) {
     return new Blob([input]).size;
   }
 }
