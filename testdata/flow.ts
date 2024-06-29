@@ -1,6 +1,12 @@
 // https://www.mockachino.com/spaces/6e5778ca-638a-4c
 const endpointBase = 'https://www.mockachino.com/6e5778ca-638a-4c';
 
+const flowSharedSettings = {
+  name: 'Flow',
+  description: 'Some description here.',
+  generatorApiBaseUrl: 'https://www.mockachino.com/6e5778ca-638a-4c/'
+};
+
 export const validFlowInitialStateSmall = {
   id: 'item123',
   settings: { description: 'Some description here.' },
@@ -247,6 +253,129 @@ export const validFlowInitialState2 = {
         ]
       },
       next: 'xyz321'
+    }
+  ]
+};
+
+export const validFlowInitialStateWithConditional = {
+  id: 'abc123',
+  settings: flowSharedSettings,
+  components: [
+    {
+      id: 'abc123',
+      type: 'start',
+      settings: {
+        name: 'Start',
+        triggers: {
+          http: true,
+          event: false,
+          time: false
+        },
+        path: '/convertReservations',
+        method: 'GET'
+      },
+      input: [
+        {
+          field: 'identity.name',
+          type: 'text',
+          validation: [],
+          isRequired: true
+        },
+        {
+          field: 'identity.age',
+          type: 'number',
+          validation: [],
+          isRequired: true
+        },
+        {
+          field: 'time',
+          type: 'date',
+          validation: ['timeHhMm'],
+          isRequired: true
+        },
+        {
+          field: 'cancelled',
+          type: 'true_false',
+          validation: [],
+          isRequired: true
+        }
+      ],
+      next: 'conditional123'
+    },
+    {
+      id: 'conditional123',
+      type: 'conditional',
+      active: true,
+      settings: {
+        name: 'Conditional test'
+      },
+      input: [
+        {
+          name: 'Guest has cancelled',
+          type: 'conditional',
+          active: true,
+          conditions: [
+            {
+              field: 'cancelled',
+              condition: 'is',
+              expected: 'true',
+              active: true
+            }
+          ],
+          next: 'transform1'
+        }
+      ],
+      next: '' // Default
+    },
+    {
+      id: 'transform1',
+      type: 'transform',
+      settings: {
+        name: 'Transform age and name',
+        nonExistingValueHandling: 'drop',
+        currency: {
+          symbol: 'EUR',
+          locale: 'sv-SE',
+          precision: 8
+        },
+        dateStyle: 'date'
+      },
+      input: {
+        active: true,
+        fields: [
+          {
+            field: 'age',
+            value: 'identity.age',
+            type: 'keep',
+            active: true
+          },
+          {
+            field: 'name',
+            value: 'identity.name',
+            type: 'keep',
+            active: true
+          }
+        ]
+      },
+      next: 'refine1'
+    },
+    {
+      name: '',
+      id: 'refine1',
+      type: 'refine',
+      settings: {},
+      input: {
+        active: true,
+        conditions: [
+          {
+            field: 'cancelled',
+            condition: 'is',
+            expected: 'true',
+            active: true
+          }
+        ]
+      },
+      next: ''
     }
   ]
 };

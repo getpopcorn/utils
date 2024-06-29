@@ -1,5 +1,5 @@
 /**
- * @description TODO
+ * @description Get an appropriate request body for the provided message, to be used with the Fetch API.
  */
 export function getRequestBody(message: unknown): string | ArrayBuffer | Uint8Array | null {
   if (message) {

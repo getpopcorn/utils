@@ -43,30 +43,49 @@ export class Utils {
    * @description Run a set of functions on Flow components to reduce down to their final value.
    */
   // eslint-disable-next-line
-  public reduceToValue(components: FlowComponentRepresentation[], functions: Record<string, Function>) {
-    return components.reduce(
-      async (
-        result: Record<string, any>[] | Promise<Record<string, any>>,
-        component: FlowComponentRepresentation
-      ) => {
-        const resolvedResult = await result;
-        const fn = functions[component.type];
-        if (fn) {
-          const nextId = (() => {
-            // @ts-ignore
-            const resolvedId = component?.next || component?.[0]?.next;
-            return resolvedId !== component.id ? resolvedId : component.next;
-          })();
-          component.next = nextId;
-          // @ts-ignore
-          const input = resolvedResult?.input || resolvedResult;
-          return fn(component, input);
-        }
+  public async reduceToValue(components: FlowComponentRepresentation[], functions: Record<string, Function>, stopAtId?: string) {
+    const startComponent = components.find((component) => component.type === 'start');
+    if (!startComponent) throw new Error('Missing Start component!');
 
-        return resolvedResult;
-      },
-      Promise.resolve(components)
-    );
+    const visitedComponents = new Set<string>();
+
+    let currentComponent: FlowComponentRepresentation | undefined = startComponent;
+    let currentResult: Record<string, any> | Record<string, any>[] | undefined = undefined;
+
+    // Traverse all components in their logical execution order
+    while (currentComponent) {
+      const { type, id } = currentComponent;
+      const fn = functions[type];
+
+      if (fn) {
+        visitedComponents.add(id);
+
+        const result: any = await fn(currentComponent, currentResult);
+        const nextId = getNextId(currentComponent, result);
+        const nextComponent = findNextComponent(components, nextId);
+        if (nextId && !nextComponent) throw new Error('Next ID does not exist!');
+        if (visitedComponents.has(nextId))
+          throw new Error('Looping back to already-visited component node!');
+
+        currentComponent = nextComponent;
+        currentResult = result?.input || result;
+
+        if (id === stopAtId) return currentResult;
+      } else {
+        currentComponent = undefined;
+      }
+    }
+
+    function getNextId(currentComponent: FlowComponentRepresentation, result: Record<string, any>) {
+      if (!result) return;
+      return currentComponent.type === 'conditional' ? result.next : currentComponent.next;
+    }
+
+    function findNextComponent(components: FlowComponentRepresentation[], nextId: string) {
+      return components.find((component) => component.id === nextId);
+    }
+
+    return currentResult;
   }
 
   /**
