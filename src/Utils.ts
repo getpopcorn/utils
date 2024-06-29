@@ -49,19 +49,23 @@ export class Utils {
         result: Record<string, any>[] | Promise<Record<string, any>>,
         component: FlowComponentRepresentation
       ) => {
+        const resolvedResult = await result;
         const fn = functions[component.type];
         if (fn) {
-          const resolvedResult = await result;
-          const nextId =
+          const nextId = (() => {
             // @ts-ignore
-            resolvedResult?.next !== component.id ? resolvedResult?.next : component.next;
+            const resolvedId = component?.next || component?.[0]?.next;
+            return resolvedId !== component.id ? resolvedId : component.next;
+          })();
           component.next = nextId;
           // @ts-ignore
           const input = resolvedResult?.input || resolvedResult;
-          return await fn(component, input);
+          return fn(component, input);
         }
+
+        return resolvedResult;
       },
-      components
+      Promise.resolve(components)
     );
   }
 
