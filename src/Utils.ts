@@ -55,6 +55,8 @@ export class Utils {
     // Traverse all components in their logical execution order
     while (currentComponent) {
       const { type, id } = currentComponent;
+      if (!id) throw new Error('ID is missing!');
+
       const fn = functions[type];
 
       if (fn) {
@@ -67,6 +69,7 @@ export class Utils {
         if (visitedComponents.has(nextId))
           throw new Error('Looping back to already-visited component node!');
 
+        // TODO: Dynamic linking - currentComponent.next = nextId;
         currentComponent = nextComponent;
         currentResult = result?.input || result;
 
