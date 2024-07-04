@@ -80,8 +80,7 @@ export class Utils {
     }
 
     function getNextId(currentComponent: FlowComponentRepresentation, result: Record<string, any>) {
-      if (!result) return;
-      return currentComponent.type === 'conditional' ? result.next : currentComponent.next;
+      return currentComponent.type === 'conditional' ? result?.next : currentComponent.next;
     }
 
     function findNextComponent(components: FlowComponentRepresentation[], nextId: string) {
