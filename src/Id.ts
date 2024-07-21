@@ -9,6 +9,8 @@ import { IdType } from './interfaces/Id.js';
 export class Id {
   /**
    * @description Creates a new ID using our common formats.
+   * Optionally, `onlyLowerCase` may be passed which for alphanumeric
+   * IDs will return a string that only uses numbers and lower-case letters.
    *
    * @see
    * https://www.npmjs.com/package/nanoid
@@ -22,8 +24,8 @@ export class Id {
    * const longId = id.create('long'); // 12-character NanoID
    * const ulid = id.create('ulid'); // ULID
    */
-  public create(idType: IdType): string {
-    if (idType === 'safe') return this.alphaNumericId(12);
+  public create(idType: IdType, onlyLowerCase = false): string {
+    if (idType === 'safe') return this.alphaNumericId(12, onlyLowerCase);
     if (idType === 'short') return nanoid(8);
     if (idType === 'long') return nanoid(12);
     if (idType === 'ulid') return ulid();
@@ -36,8 +38,10 @@ export class Id {
   /**
    * @description Generates a "safe" ID, using only alphanumeric characters.
    */
-  private alphaNumericId(length = 12) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  private alphaNumericId(length = 12, onlyLowerCase = false) {
+    const characters = onlyLowerCase
+      ? `abcdefghijklmnopqrstuvwxyz0123456789`
+      : `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789`;
     return Array.from({ length }, () =>
       characters.charAt(Math.floor(Math.random() * characters.length))
     ).join('');

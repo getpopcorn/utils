@@ -6,11 +6,23 @@ const id = new Id();
 
 test('It should get a "safe" alpha-numeric ID', () => {
   const result = id.create('safe');
+  console.log('1', result);
 
-  const isAlphaNumeric = /^[a-z0-9]+$/i.test(result);
+  const isAlphaNumeric = /^[a-zA-Z0-9]+$/i.test(result);
 
   expect(isAlphaNumeric).toBe(true);
   expect(result.length).toBe(12);
+});
+
+test('It should get a "safe" alpha-numeric ID containing only numbers and lower-case characters', () => {
+  const result = id.create('safe', true);
+
+  const isAlphaNumeric = /^[a-z0-9]+$/i.test(result);
+  const noCapitalLetters = /^[^A-Z]+$/.test(result);
+
+  expect(isAlphaNumeric).toBe(true);
+  expect(result.length).toBe(12);
+  expect(noCapitalLetters).toBe(true);
 });
 
 test('It should get a short ID', () => {
